@@ -9,4 +9,14 @@ class Intervention extends Model
 {
     /** @use HasFactory<\Database\Factories\InterventionFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'description',
+        'statut',
+        'date_prevue',
+        'priorité',
+        'type_appareil_id',
+        'client_id',
+    ];
+
 }

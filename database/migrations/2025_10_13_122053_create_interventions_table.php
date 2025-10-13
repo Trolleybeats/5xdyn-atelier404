@@ -15,15 +15,16 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('description');
-            $table->enum('status',['Nouvelle_demande','Diagnostic','En_réparations','Terminé','Non_réparable'] )->default('Nouvelle demande');
+            $table->enum('statut',['Nouvelle_demande','Diagnostic','En_réparations','Terminé','Non_réparable'] )->default('Nouvelle demande');
             $table->date('date_prevue')->nullable();
             $table->enum('priorité',['faible','normal','élevé','critique'])->default('normal');
-            // type d'appareil
-            //client
-            //Images -> dans attribution
-            //Notes -> dans attribution
-            //attribution
-            
+            //foreign
+                // type d'appareil
+                //client
+                //Images -> dans attribution
+                //Notes -> dans attribution
+                //attribution
+
         });
     }
 
