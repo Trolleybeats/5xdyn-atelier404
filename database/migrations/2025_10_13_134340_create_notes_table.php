@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('type_appareils', function (Blueprint $table) {
+        Schema::create('notes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('nom')->unique();
+            $table->text('contenu');
+            //foreign
+            $table->foreignId('intervention_id')->constrained('interventions')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
         });
     }
 
@@ -23,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('type_appareils');
+        Schema::dropIfExists('notes');
     }
 };
