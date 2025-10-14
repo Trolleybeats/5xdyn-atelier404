@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Gate;
 
 class RegisteredUserController extends Controller
 {
@@ -19,6 +20,9 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
+        // Seuls les administrateurs peuvent créer de nouveaux utilisateurs
+        Gate::authorize('create', User::class);
+        
         return view('auth.register');
     }
 
@@ -29,22 +33,28 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        // Seuls les administrateurs peuvent créer de nouveaux utilisateurs
+        Gate::authorize('create', User::class);
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => ['required', 'in:admin,technicien'],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => $request->role,
         ]);
 
         event(new Registered($user));
 
-        Auth::login($user);
+        // Ne pas connecter automatiquement l'utilisateur créé par l'admin
+        // L'admin reste connecté avec son propre compte
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect()->route('admin.users.index')->with('success', 'Utilisateur créé avec succès.');
     }
 }

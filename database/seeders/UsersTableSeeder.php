@@ -24,5 +24,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'technicien@example.com',
             'role' => 'technicien',
         ]);
+
+        User::factory(10)->create();
     }
 }
