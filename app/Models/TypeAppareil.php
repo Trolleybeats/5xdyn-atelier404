@@ -9,8 +9,6 @@ class TypeAppareil extends Model
 {
     /** @use HasFactory<\Database\Factories\TypeAppareilFactory> */
     use HasFactory;
-<<<<<<< Updated upstream
-=======
     protected $fillable = [
         'nom',
     ];
@@ -23,5 +21,4 @@ class TypeAppareil extends Model
     {
         return self::all();
     }
->>>>>>> Stashed changes
 }
