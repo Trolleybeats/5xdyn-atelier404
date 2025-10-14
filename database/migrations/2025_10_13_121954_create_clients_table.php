@@ -18,8 +18,6 @@ return new class extends Migration
             $table->string('téléphone');
             $table->string('addresse')->nullable();
             $table->timestamps();
-            //foreign    
-                //intervention
         });
     }
 
