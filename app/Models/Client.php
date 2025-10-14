@@ -14,7 +14,6 @@ class Client extends Model
         'nom',
         'email',
         'téléphone',
-        'intervention_id'
     ];
 
     public function interventions()
