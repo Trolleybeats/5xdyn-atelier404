@@ -17,7 +17,9 @@ class ImageFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'path' => fake()->imageUrl(640, 480, 'cats', true, 'Faker'),
+            'note_id' => \App\Models\Note::get()->random()->id,
+            'created_at' => now(),
         ];
     }
 }

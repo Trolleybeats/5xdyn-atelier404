@@ -25,4 +25,20 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('/users', UserController::class);
 });
 
+//Routes pour les attributions
+/*Route::middleware(['auth', 'verified'])->group(function () {
+    Route::post('/interventions/{intervention}/assign', [InterventionController::class, 'assignIntervention'])->name('interventions.attributions.assign');
+
+    Route::patch('/interventions/{intervention}/attributions/{attribution}', [InterventionController::class, 'updateAttribution'])->name('interventions.attributions.update');
+})*/
+
+//Routes pour les notes
+/*Route::middleware(['auth'])->group(function () {
+    Route::post('/interventions/{intervention}/notes', [NoteController::class, 'addNote'])->name('interventions.notes.add');
+    Route::delete('/interventions/{intervention}/notes/{note}', [NoteController::class, 'deleteNote'])->name('interventions.notes.delete');
+});*/
+
+//Routes pour les images
+/*Route::post('/interventions/{intervention}/images', [ImageController::class, 'addImage'])->name('interventions.images.add');*/
+
 require __DIR__.'/auth.php';
