@@ -16,6 +16,9 @@ class DatabaseSeeder extends Seeder
     
         $this->call([
             UsersTableSeeder::class,
+            AttributionSeeder::class,
+            NoteSeeder::class,
+            ImageSeeder::class,
         ]);
     }
 }
