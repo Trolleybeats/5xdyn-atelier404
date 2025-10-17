@@ -17,7 +17,9 @@ class AttributionFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => \App\Models\User::get()->random()->id,
+            'intervention_id' => \App\Models\Intervention::get()->random()->id,
+            'created_at' => fake()->dateTimeBetween('-1 month', 'now'),
         ];
     }
 }
