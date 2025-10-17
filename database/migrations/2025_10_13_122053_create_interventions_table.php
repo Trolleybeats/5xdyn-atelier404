@@ -19,16 +19,8 @@ return new class extends Migration
             $table->date('date_prevue')->nullable();
             $table->enum('priorite',['faible','moyenne','eleve','critique'])->default('moyenne');
             //foreign
-<<<<<<< Updated upstream
-                // type d'appareil
-                //client
-                //Images -> dans attribution
-                //Notes -> dans attribution
-                //attribution
-=======
             $table->foreignId('type_appareil_id')->constrained('type_appareils')->onDelete('cascade');
             $table->foreignId('client_id')->constrained('clients')->onDelete('cascade');
->>>>>>> Stashed changes
 
         });
     }

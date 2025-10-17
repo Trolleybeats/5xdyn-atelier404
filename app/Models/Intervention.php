@@ -30,4 +30,7 @@ class Intervention extends Model
     public function attributions(){
         return $this->hasMany(Attribution::class);
     }
+    public function notes(){
+        return $this->hasMany(Note::class);
+    }
 }

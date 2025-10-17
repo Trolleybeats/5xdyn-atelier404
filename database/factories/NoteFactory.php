@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Attribution>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Note>
  */
-class AttributionFactory extends Factory
+class NoteFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,10 @@ class AttributionFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => \App\Models\User::get()->random()->id,
+            'contenu' => fake()->realTextBetween($minNbChars = 20, $maxNbChars = 200),
             'intervention_id' => \App\Models\Intervention::get()->random()->id,
-            'created_at' => fake()->dateTimeBetween('-1 month', 'now'),
+            'user_id' => \App\Models\User::get()->random()->id,
+            'created_at' => fake()->dateTimeBetween('-1 months', 'now'),
         ];
     }
 }

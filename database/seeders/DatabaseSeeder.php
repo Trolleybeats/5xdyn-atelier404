@@ -13,18 +13,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-<<<<<<< Updated upstream
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-=======
 
         $this->call([
             UsersTableSeeder::class,
             TypeAppareilSeeder::class,
->>>>>>> Stashed changes
+            AttributionSeeder::class,
+            NoteSeeder::class,
+            ImageSeeder::class,
+
         ]);
     }
 }
