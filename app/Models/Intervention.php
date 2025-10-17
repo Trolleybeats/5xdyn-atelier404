@@ -14,7 +14,7 @@ class Intervention extends Model
         'description',
         'statut',
         'date_prevue',
-        'priorité',
+        'priorite',
         'type_appareil_id',
         'client_id',
     ];
