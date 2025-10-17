@@ -35,9 +35,6 @@
     </div>
 @endif
 
-    ];
-@endphp
-<x-guest-layout>
 {{-- Présentation Atelier 404 --}}
 <div class="mb-8 p-4 bg-white rounded shadow">
     <h1 class="text-2xl font-bold mb-2">Bienvenue à l'Atelier 404</h1>
