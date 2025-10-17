@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\TypeAppareil;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\JsonSchema\Types\Type;
 
 class TypeAppareilSeeder extends Seeder
 {
@@ -13,5 +15,6 @@ class TypeAppareilSeeder extends Seeder
     public function run(): void
     {
         //
+        TypeAppareil::factory()->count(10)->create();
     }
 }

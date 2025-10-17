@@ -2,15 +2,21 @@
 
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\InterventionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+Route::get('/interventions/create', [InterventionController::class, 'create'])->name('interventions.create');
+Route::post('/interventions', [InterventionController::class, 'store'])->name('interventions.store');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -24,6 +30,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     // Gestion des utilisateurs (Détails et changement de rôle)
     Route::resource('/users', UserController::class);
 });
+
 
 //Routes pour les attributions
 /*Route::middleware(['auth', 'verified'])->group(function () {
@@ -42,3 +49,4 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 /*Route::post('/interventions/{intervention}/images', [ImageController::class, 'addImage'])->name('interventions.images.add');*/
 
 require __DIR__.'/auth.php';
+
