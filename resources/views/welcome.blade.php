@@ -35,14 +35,10 @@
     </div>
 @endif
 
-    ];
-@endphp
-<x-guest-layout>
 {{-- Présentation Atelier 404 --}}
 <div class="mb-8 p-4 bg-white rounded shadow">
     <h1 class="text-2xl font-bold mb-2">Bienvenue à l'Atelier 404</h1>
     <p class="text-gray-700">
-
         L'Atelier 404 est le repair café étudiant de la section informatique, ouvert à tous. Encadrés par des enseignants, nos étudiants proposent gratuitement la réparation d'équipements informatiques pour les citoyens. Face à l'afflux croissant de demandes, l'Atelier 404 s'engage à offrir un service professionnel, convivial et accessible, favorisant l'entraide, l'apprentissage et le réemploi du matériel numérique.
     </p>
 </div>

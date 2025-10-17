@@ -24,9 +24,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
 //Routes pour la gestion des utilisateurs
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
-    
+
     // Gestion des utilisateurs (Détails et changement de rôle)
     Route::resource('/users', UserController::class);
 });
@@ -48,5 +49,4 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 //Routes pour les images
 /*Route::post('/interventions/{intervention}/images', [ImageController::class, 'addImage'])->name('interventions.images.add');*/
 
-require __DIR__.'/auth.php';
-
+require __DIR__ . '/auth.php';
