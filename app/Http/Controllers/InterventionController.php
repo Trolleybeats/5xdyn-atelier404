@@ -34,7 +34,6 @@ class InterventionController extends Controller
     {
         //
 
-        // Gate::authorize('create', Intervention::class);
 
         $validatedClient = $request->validate([
             'nom' => 'required|string|max:255',

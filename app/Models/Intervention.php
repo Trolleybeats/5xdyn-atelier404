@@ -33,4 +33,8 @@ class Intervention extends Model
     public function notes(){
         return $this->hasMany(Note::class);
     }
+
+    public function derniere_attribution(){
+        return $this->attributions()->latest()->first();
+    }
 }

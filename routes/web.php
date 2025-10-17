@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\InterventionController as AdminInterventionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InterventionController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -14,7 +16,6 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::get('/interventions/create', [InterventionController::class, 'create'])->name('interventions.create');
 Route::post('/interventions', [InterventionController::class, 'store'])->name('interventions.store');
 
 
@@ -30,6 +31,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 
     // Gestion des utilisateurs (Détails et changement de rôle)
     Route::resource('/users', UserController::class);
+
+    Route::resource('/interventions', AdminInterventionController::class);
 });
 
 
