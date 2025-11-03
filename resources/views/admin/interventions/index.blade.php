@@ -42,7 +42,18 @@
                                             {{ \Illuminate\Support\Carbon::parse($intervention->date_prevue)->format('d/m/Y') }}
                                         </td>
                                         <td class="border px-4 py-2">
-                                            {{ $intervention->derniereAttribution?->user->name ?? 'Non assigné' }}</td>
+                                            <form method="POST" action="{{ route('admin.interventions.attributions.assign', $intervention) }}">
+                                                @csrf
+                                                <select name="user_id" onchange="this.form.submit()" class="border border-gray-300 rounded px-2 py-1">
+                                                    <option value="">Non assigné</option>
+                                                    @foreach($techniciens as $technicien)
+                                                        <option value="{{ $technicien->id }}" {{ $intervention->derniereAttribution && $intervention->derniereAttribution->user_id == $technicien->id ? 'selected' : '' }}>
+                                                            {{ $technicien->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </form>
+                                        </td>
                                         <td class="border px-4 py-2 space-x-4">
                                             <div class="flex space-x-4">
                                                 <a href="{{ route('admin.interventions.edit', $intervention) }}"

@@ -35,6 +35,9 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 
     // Gestion des interventions (Vue admin)
     Route::resource('/interventions', AdminInterventionController::class);
+
+    Route::post('/interventions/{intervention}/assign', [AdminInterventionController::class, 'assignIntervention'])->name('interventions.attributions.assign');
+    Route::patch('/interventions/{intervention}/attributions/{attribution}', [AdminInterventionController::class, 'updateAttribution'])->name('interventions.attributions.update');
 });
 
 //Routes pour la gestion des interventions (Vue technicien)
