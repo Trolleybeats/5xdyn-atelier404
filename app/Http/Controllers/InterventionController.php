@@ -86,6 +86,10 @@ class InterventionController extends Controller
     public function edit(Intervention $intervention)
     {
         //
+        Gate::authorize('update', $intervention);
+        return view('tech.interventions.edit', [
+            'intervention' => $intervention,
+        ]);
     }
 
     /**
@@ -94,6 +98,13 @@ class InterventionController extends Controller
     public function update(Request $request, Intervention $intervention)
     {
         //
+        $validatedData = $request->validate([
+            'statut' => 'required|in:Nouvelle_demande,Diagnostic,En_réparations,Terminé,Non_réparable',
+            'priorite' => 'required|in:faible,moyenne,elevee,critique',
+            'date_prevue' => 'nullable|date',
+            'description' => 'required|string',
+        ]);
+        $intervention->update($validatedData);
     }
 
     /**

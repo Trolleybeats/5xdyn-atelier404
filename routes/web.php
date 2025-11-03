@@ -32,7 +32,13 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     // Gestion des utilisateurs (Détails et changement de rôle)
     Route::resource('/users', UserController::class);
 
+    // Gestion des interventions (Vue admin)
     Route::resource('/interventions', AdminInterventionController::class);
+});
+
+//Routes pour la gestion des interventions (Vue technicien)
+Route::middleware(['auth', 'verified'])->prefix('tech')->name('tech.')->group(function () {
+    Route::resource('/interventions', InterventionController::class)->only(['index', 'show', 'edit', 'update']);
 });
 
 
