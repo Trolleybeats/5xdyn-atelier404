@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Attribution;
 use App\Models\Intervention;
+use App\Models\User;
 use Dom\Attr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -17,11 +18,16 @@ class InterventionController extends Controller
     public function index()
     {
         Gate::authorize('viewAny', Intervention::class);
-        $interventions = Intervention::with(['typeAppareil', 'client', 'attributions.user'])
+        $interventions = Intervention::with(['typeAppareil', 'client', 'derniereAttribution.user'])
             ->latest()
             ->paginate(10);
+            
+        // Charger tous les techniciens pour la liste déroulante
+        $techniciens = User::whereIn('role', ['admin', 'technicien'])->get();
+        
         return view('admin.interventions.index', [
             'interventions' => $interventions,
+            'techniciens' => $techniciens,
         ]);
     }
 
@@ -79,11 +85,32 @@ class InterventionController extends Controller
         //
     }
 
-    public function assignIntervention(Request $request, Attribution $attribution)
+    public function assignIntervention(Request $request, Intervention $intervention)
     {
-        Gate::authorize('assignIntervention', $attribution);
+        // Vérifier que l'utilisateur peut modifier cette intervention
+        Gate::authorize('update', $intervention);
 
-        return redirect()->back()->with('success', 'Attribution mise à jour avec succès.');
+        $request->validate([
+            'user_id' => 'nullable|exists:users,id',
+        ]);
+
+        if ($request->user_id) {
+            // Supprimer les anciennes attributions pour cette intervention
+            $intervention->attributions()->delete();
+            
+            // Créer une nouvelle attribution
+            Attribution::create([
+                'intervention_id' => $intervention->id,
+                'user_id' => $request->user_id,
+            ]);
+
+            return redirect()->back()->with('success', 'Technicien assigné avec succès.');
+        } else {
+            // Si pas de technicien sélectionné, supprimer les attributions existantes
+            $intervention->attributions()->delete();
+            
+            return redirect()->back()->with('success', 'Attribution supprimée avec succès.');
+        }
     }
 
     public function updateAttribution(Request $request, Attribution $attribution)

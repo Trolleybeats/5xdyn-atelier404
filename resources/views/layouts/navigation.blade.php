@@ -29,14 +29,6 @@
                         <x-nav-link :href="route('tech.interventions.index')" :active="request()->routeIs('tech.interventions.*')"> {{ __('Mes Interventions') }}
                         </x-nav-link>
                     @endcan
-
-                    
-                    <x-nav-link
-                        :href="route('admin.interventions.index')"
-                        :active="request()->routeIs('admin.interventions.*')"
-                    >
-                        {{ __('Interventions') }}
-                    </x-nav-link>
                     
                 </div>
             </div>
