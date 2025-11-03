@@ -13,7 +13,8 @@ class Client extends Model
     protected $fillable = [
         'nom',
         'email',
-        'téléphone',
+        'telephone',
+        'adresse',
     ];
 
     public function interventions()

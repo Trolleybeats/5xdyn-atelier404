@@ -1,3 +1,4 @@
+<x-app-layout>
 @php
     use App\Models\TypeAppareil;
 @endphp
@@ -25,3 +26,5 @@
         <x-primary-button >Envoyer</x-primary-button>
     </form>
 </div>
+
+</x-app-layout>

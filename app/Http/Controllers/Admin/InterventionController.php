@@ -60,7 +60,6 @@ class InterventionController extends Controller
         Gate::authorize('update', $intervention);
         return view('admin.interventions.edit', [
             'intervention' => $intervention,
-
         ]);
     }
 

@@ -13,5 +13,6 @@ class InterventionSeeder extends Seeder
     public function run(): void
     {
         //
+        \App\Models\Intervention::factory()->count(30)->create();
     }
 }
