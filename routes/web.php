@@ -19,17 +19,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-//Routes pour la gestion des utilisateurs
+
+//Routes pour la gestion des utilisateurs et interventions
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     
     // Gestion des utilisateurs (Détails et changement de rôle)
     Route::resource('/users', UserController::class);
-});
-
-//Routes pour les attributions
-Route::middleware(['auth', 'verified'])->group(function () {
+    
+    // Gestion des interventions
+    Route::get('/interventions', [InterventionController::class, 'index'])->name('interventions.index');
     Route::post('/interventions/{intervention}/assign', [InterventionController::class, 'assignIntervention'])->name('interventions.attributions.assign');
-
     Route::patch('/interventions/{intervention}/attributions/{attribution}', [InterventionController::class, 'updateAttribution'])->name('interventions.attributions.update');
 });
 
