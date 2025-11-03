@@ -25,7 +25,7 @@
                         <x-nav-link :href="route('admin.interventions.index')" :active="request()->routeIs('admin.interventions.*')"> {{ __('Interventions') }}
                         </x-nav-link>
                     @endcan
-                    @can('viewAny', App\Models\Intervention::class)
+                    @can('viewOwn', App\Models\Intervention::class)
                         <x-nav-link :href="route('tech.interventions.index')" :active="request()->routeIs('tech.interventions.*')"> {{ __('Mes Interventions') }}
                         </x-nav-link>
                     @endcan
@@ -102,7 +102,7 @@
                 <x-responsive-nav-link :href="route('admin.interventions.index')" :active="request()->routeIs('admin.interventions.*')"> {{ __('Interventions') }}
                 </x-responsive-nav-link>
             @endcan
-            @can('viewAny', App\Models\Intervention::class)
+            @can('viewOwn', App\Models\Intervention::class)
                 <x-responsive-nav-link :href="route('tech.interventions.index')" :active="request()->routeIs('tech.interventions.*')"> {{ __('Mes Interventions') }}
                 </x-responsive-nav-link>
             @endcan

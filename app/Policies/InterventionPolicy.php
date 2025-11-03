@@ -14,8 +14,13 @@ class InterventionPolicy
     public function viewAny(User $user): bool
     {
         // Seul l'administrateur peut voir la liste des interventions
+
+        return $user->role === 'admin';
+    }
+
+    public function viewOwn(User $user): bool
+    {
          return in_array($user->role, ['admin', 'technicien']);
-        // return $user->role === 'admin';
     }
 
     /**

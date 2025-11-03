@@ -16,7 +16,7 @@ class InterventionController extends Controller
     public function index()
     {
         //
-        Gate::authorize('viewAny', Intervention::class);
+        Gate::authorize('viewOwn', Intervention::class);
         $interventions = Intervention::whereHas('derniereAttribution', function ($query) {
             $query->where('user_id', auth()->id());
         })
