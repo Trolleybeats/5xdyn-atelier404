@@ -79,9 +79,9 @@ class InterventionController extends Controller
         //
     }
 
-    public function assignAttribution(Request $request, Attribution $attribution)
+    public function assignIntervention(Request $request, Attribution $attribution)
     {
-        Gate::authorize('assignAttribution', $attribution);
+        Gate::authorize('assignIntervention', $attribution);
 
         return redirect()->back()->with('success', 'Attribution mise à jour avec succès.');
     }

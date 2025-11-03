@@ -15,7 +15,7 @@ class AttributionPolicy
         //
     }
 
-    public function assignAttribution(User $user)
+    public function assignIntervention(User $user)
     {
        return $user->role === 'admin';
     }

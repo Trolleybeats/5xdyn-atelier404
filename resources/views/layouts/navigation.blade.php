@@ -30,14 +30,14 @@
                         </x-nav-link>
                     @endcan
 
-                    @can('viewAny', App\Models\Intervention::class)
+                    
                     <x-nav-link
                         :href="route('admin.interventions.index')"
                         :active="request()->routeIs('admin.interventions.*')"
                     >
                         {{ __('Interventions') }}
                     </x-nav-link>
-                    @endcan
+                    
                 </div>
             </div>
 
@@ -110,14 +110,14 @@
           </x-responsive-nav-link>
           @endcan
 
-          @can('viewAny', App\Models\Intervention::class)
+          
             <x-responsive-nav-link
                 :href="route('admin.interventions.index')"
                 :active="request()->routeIs('admin.interventions.*')"
             >
                 {{ __('Interventions') }}
             </x-responsive-nav-link>
-            @endcan
+            
         </div>
 
         <!-- Responsive Settings Options -->
