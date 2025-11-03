@@ -13,7 +13,14 @@ class InterventionPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        // Seul l'administrateur peut voir la liste des interventions
+
+        return $user->role === 'admin';
+    }
+
+    public function viewOwn(User $user): bool
+    {
+         return in_array($user->role, ['admin', 'technicien']);
     }
 
     /**
@@ -21,7 +28,7 @@ class InterventionPolicy
      */
     public function view(User $user, Intervention $intervention): bool
     {
-        return false;
+        return $user->role === 'admin' || $user->id === $intervention->technicien_id;;
     }
 
     /**
@@ -37,7 +44,14 @@ class InterventionPolicy
      */
     public function update(User $user, Intervention $intervention): bool
     {
-        return false;
+        // Admin peut tout modifier
+        if ($user->role === 'admin') {
+            return true;
+        }
+
+        // Technicien peut modifier si c'est sa dernière attribution
+        $derniereAttribution = $intervention->derniereAttribution;
+        return $derniereAttribution && $derniereAttribution->user_id === $user->id;
     }
 
     /**
@@ -45,7 +59,7 @@ class InterventionPolicy
      */
     public function delete(User $user, Intervention $intervention): bool
     {
-        return false;
+        return $user->role === 'admin';
     }
 
     /**

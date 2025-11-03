@@ -18,6 +18,11 @@ class ClientFactory extends Factory
     {
         return [
             //
+            'nom' => $this->faker->company(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'telephone' => $this->faker->phoneNumber(),
+            'adresse' => $this->faker->address(),
+
         ];
     }
 }

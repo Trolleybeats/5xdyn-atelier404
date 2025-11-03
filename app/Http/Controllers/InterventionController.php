@@ -16,6 +16,15 @@ class InterventionController extends Controller
     public function index()
     {
         //
+        Gate::authorize('viewOwn', Intervention::class);
+        $interventions = Intervention::whereHas('derniereAttribution', function ($query) {
+            $query->where('user_id', auth()->id());
+        })
+            ->with(['typeAppareil', 'client', 'derniereAttribution.user'])
+            ->paginate(15);
+        return view('tech.interventions.index', [
+            'interventions' => $interventions,
+        ]);
     }
 
     /**
@@ -34,7 +43,6 @@ class InterventionController extends Controller
     {
         //
 
-        // Gate::authorize('create', Intervention::class);
 
         $validatedClient = $request->validate([
             'nom' => 'required|string|max:255',
@@ -78,6 +86,10 @@ class InterventionController extends Controller
     public function edit(Intervention $intervention)
     {
         //
+        Gate::authorize('update', $intervention);
+        return view('tech.interventions.edit', [
+            'intervention' => $intervention,
+        ]);
     }
 
     /**
@@ -86,6 +98,14 @@ class InterventionController extends Controller
     public function update(Request $request, Intervention $intervention)
     {
         //
+        $validatedData = $request->validate([
+            'statut' => 'required|in:Nouvelle_demande,Diagnostic,En_réparations,Terminé,Non_réparable',
+            'priorite' => 'required|in:faible,moyenne,elevee,critique',
+            'date_prevue' => 'nullable|date',
+        ]);
+        $intervention->update($validatedData);
+        $intervention->save();
+        return redirect()->route('tech.interventions.index')->with('success', 'Intervention mise à jour avec succès.');
     }
 
     /**

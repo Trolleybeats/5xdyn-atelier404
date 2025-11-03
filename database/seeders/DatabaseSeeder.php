@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UsersTableSeeder::class,
             TypeAppareilSeeder::class,
+            ClientSeeder::class,
+            InterventionSeeder::class,
             AttributionSeeder::class,
             NoteSeeder::class,
             ImageSeeder::class,
