@@ -3,7 +3,6 @@
 use App\Http\Controllers\Admin\InterventionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\InterventionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
