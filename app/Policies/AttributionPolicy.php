@@ -15,13 +15,13 @@ class AttributionPolicy
         //
     }
 
-    public function assign(User $user)
+    public function assignAttribution(User $user)
     {
-        return $user->hasRole('admin');
+       return $user->role === 'admin';
     }
 
-    public function update(User $user)
+    public function updateAttribution(User $user)
     {
-        return $user->hasRole('admin');
+        return $user->role === 'admin';
     }
 }
