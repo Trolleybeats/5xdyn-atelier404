@@ -15,11 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('nom');
             $table->string('email')->unique();
-            $table->string('téléphone');
-            $table->string('addresse')->nullable();
+            $table->string('telephone');
+            $table->string('adresse')->nullable();
             $table->timestamps();
-            //foreign    
-                //intervention
         });
     }
 

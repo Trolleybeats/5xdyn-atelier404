@@ -16,4 +16,9 @@ class TypeAppareil extends Model
     {
         return $this->hasMany(Intervention::class);
     }
+
+    public static function getAll()
+    {
+        return self::all();
+    }
 }

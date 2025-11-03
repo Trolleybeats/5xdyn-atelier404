@@ -12,6 +12,6 @@ class AttributionSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        \App\Models\Attribution::factory(5)->create();
     }
 }
