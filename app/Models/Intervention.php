@@ -35,6 +35,7 @@ class Intervention extends Model
     }
 
     public function derniere_attribution(){
-        return $this->attributions()->latest()->first();
+        return $this->hasOne(Attribution::class)->latestOfMany();
+        // return $this->attributions()->latest()->first();
     }
 }

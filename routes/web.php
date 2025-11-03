@@ -15,7 +15,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
+Route::get('/interventions', [InterventionController::class, 'index'])->name('interventions.index');
 Route::post('/interventions', [InterventionController::class, 'store'])->name('interventions.store');
 
 

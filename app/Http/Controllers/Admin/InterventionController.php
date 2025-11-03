@@ -15,7 +15,9 @@ class InterventionController extends Controller
     public function index()
     {
         Gate::authorize('viewAny', Intervention::class);
-        $interventions = Intervention::paginate(10);
+        $interventions = Intervention::with(['typeAppareil', 'client', 'attributions.user'])
+            ->latest()
+            ->paginate(10);
         return view('admin.interventions.index', [
             'interventions' => $interventions,
         ]);
