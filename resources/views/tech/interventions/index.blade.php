@@ -42,7 +42,7 @@
                   <td class="border px-4 py-2 space-x-4">
                     <div class="flex space-x-4">
                       <a
-                        href="{{ route('admin.interventions.edit', $intervention) }}"
+                        href="{{ route('tech.interventions.edit', $intervention) }}"
                         class="text-blue-400"
                       >
                         Modifier
