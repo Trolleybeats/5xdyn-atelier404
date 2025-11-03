@@ -26,6 +26,7 @@
                   <th class="px-4 py-2 border">statut</th>
                   <th class="px-4 py-2 border">priorite</th>
                   <th class="px-4 py-2 border">Appareil</th>
+                  <th class="px-4 py-2 border">Date prévue</th>
                   <th class="px-4 py-2 border">Technicien</th>
                   <th class="px-4 py-2 border">Actions</th>
                 </tr>
@@ -38,6 +39,7 @@
                   <td class="border px-4 py-2">{{ $intervention->statut }}</td>
                   <td class="border px-4 py-2">{{ $intervention->priorite }}</td>
                   <td class="border px-4 py-2">{{ $intervention->typeAppareil->nom }}</td>
+                  <td class="border px-4 py-2">{{ $intervention->date_prevue }} </td>
                   <td class="border px-4 py-2">{{ $intervention->derniereAttribution?->user->name ?? 'Non assigné'}}</td>
                   <td class="border px-4 py-2 space-x-4">
                     <div class="flex space-x-4">
@@ -47,10 +49,6 @@
                       >
                         Modifier
                       </a>
-
-                      <button x-data="{ id: {{ $intervention->id }} }"
-                        x-on:click.prevent="window.selected = id; $dispatch('open-modal', 'confirm-user-deletion');"
-                        type="submit" class="text-red-400">Supprimer</button>
                     </div>
                   </td>
                 </tr>
@@ -63,30 +61,6 @@
         </div>
       </div>
     </div>
-    <x-modal name="confirm-user-deletion" focusable>
-            <form method="post" onsubmit="event.target.action= '/admin/users/' + window.selected" class="p-6">
-                @csrf
-                @method('DELETE')
-
-                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                    Êtes-vous sûr de vouloir supprimer cet intervention ?
-                </h2>
-
-                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    Cette action est irréversible. Toutes les données seront supprimées.
-                </p>
-
-                <div class="mt-6 flex justify-end">
-                    <x-secondary-button x-on:click="$dispatch('close')">
-                        Annuler
-                    </x-secondary-button>
-
-                    <x-danger-button class="ml-3" type="submit">
-                        Supprimer
-                    </x-danger-button>
-                </div>
-            </form>
-        </x-modal>
   </div>
 
 </x-app-layout>

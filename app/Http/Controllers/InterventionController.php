@@ -102,9 +102,10 @@ class InterventionController extends Controller
             'statut' => 'required|in:Nouvelle_demande,Diagnostic,En_réparations,Terminé,Non_réparable',
             'priorite' => 'required|in:faible,moyenne,elevee,critique',
             'date_prevue' => 'nullable|date',
-            'description' => 'required|string',
         ]);
         $intervention->update($validatedData);
+        $intervention->save();
+        return redirect()->route('tech.interventions.index')->with('success', 'Intervention mise à jour avec succès.');
     }
 
     /**

@@ -146,22 +146,10 @@
                         @else
                             <p class="text-gray-500 italic mb-4">Aucune note pour le moment</p>
                         @endif
-                        {{--
-                        {{-- Formulaire ajout note }}
-                        <form method="POST" action="{{-- route('interventions.notes.store', $intervention) }}" class="mt-4">
-                            @csrf
-                            <label for="contenu" class="block text-sm font-medium text-gray-700 mb-2">
-                                Ajouter une note
-                            </label>
-                            <textarea name="contenu" id="contenu" rows="3" required
-                                placeholder="Décrivez les actions effectuées, les observations, etc."
-                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 mb-3"></textarea>
-                            <button type="submit"
-                                class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition">
-                                Ajouter la note
-                            </button>
-                        </form>
-                        --}}
+
+
+                        {{-- section attribution --}}
+                        
                     </div>
                 </div>
             </div>
