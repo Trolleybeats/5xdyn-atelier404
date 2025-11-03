@@ -110,7 +110,25 @@
                             @enderror
                         </div>
 
-
+                        {{-- Technicien --}}
+                        <div>
+                            <label for="technicien" class="block text-sm font-medium text-gray-700 mb-2">
+                                Technicien assigné
+                            </label>
+                            <select name="user_id" id="technicien"
+                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                <option value="">Non assigné</option>
+                                @foreach ($techniciens as $technicien)
+                                    <option value="{{ $technicien->id }}"
+                                        {{ $intervention->derniereAttribution && $intervention->derniereAttribution->user_id == $technicien->id ? 'selected' : '' }}>
+                                        {{ $technicien->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('technicien')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
 
                         {{-- Boutons d'action --}}
                         <div class="flex items-center justify-end space-x-3 pt-4">

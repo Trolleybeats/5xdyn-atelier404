@@ -64,8 +64,16 @@ class InterventionController extends Controller
     {
         //
         Gate::authorize('update', $intervention);
+        
+        // Charger les relations nécessaires
+        $intervention->load(['client', 'typeAppareil', 'derniereAttribution.user']);
+        
+        // Charger les techniciens pour la liste déroulante
+        $techniciens = User::whereIn('role', ['admin', 'technicien'])->get();
+        
         return view('admin.interventions.edit', [
             'intervention' => $intervention,
+            'techniciens' => $techniciens,
         ]);
     }
 
