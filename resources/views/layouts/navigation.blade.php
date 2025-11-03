@@ -29,6 +29,15 @@
                         <x-nav-link :href="route('tech.interventions.index')" :active="request()->routeIs('tech.interventions.*')"> {{ __('Mes Interventions') }}
                         </x-nav-link>
                     @endcan
+
+                    @can('viewAny', App\Models\Intervention::class)
+                    <x-nav-link
+                        :href="route('admin.interventions.index')"
+                        :active="request()->routeIs('admin.interventions.*')"
+                    >
+                        {{ __('Interventions') }}
+                    </x-nav-link>
+                    @endcan
                 </div>
             </div>
 
@@ -93,18 +102,21 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
             @can('viewAny', App\Models\User::class)
-                <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
-                    {{ __('Utilisateurs') }}
+          <x-responsive-nav-link
+            :href="route('admin.users.index')"
+            :active="request()->routeIs('admin.users.*')"
+          >
+            {{ __('Utilisateurs') }}
+          </x-responsive-nav-link>
+          @endcan
 
-                </x-responsive-nav-link>
-            @endcan
-            @can('viewAny', App\Models\Intervention::class)
-                <x-responsive-nav-link :href="route('admin.interventions.index')" :active="request()->routeIs('admin.interventions.*')"> {{ __('Interventions') }}
-                </x-responsive-nav-link>
-            @endcan
-            @can('viewOwn', App\Models\Intervention::class)
-                <x-responsive-nav-link :href="route('tech.interventions.index')" :active="request()->routeIs('tech.interventions.*')"> {{ __('Mes Interventions') }}
-                </x-responsive-nav-link>
+          @can('viewAny', App\Models\Intervention::class)
+            <x-responsive-nav-link
+                :href="route('admin.interventions.index')"
+                :active="request()->routeIs('admin.interventions.*')"
+            >
+                {{ __('Interventions') }}
+            </x-responsive-nav-link>
             @endcan
         </div>
 

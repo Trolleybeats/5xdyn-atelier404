@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\InterventionController as AdminInterventionController;
 use App\Http\Controllers\ProfileController;
@@ -47,7 +48,7 @@ Route::middleware(['auth', 'verified'])->prefix('tech')->name('tech.')->group(fu
     Route::post('/interventions/{intervention}/assign', [InterventionController::class, 'assignIntervention'])->name('interventions.attributions.assign');
 
     Route::patch('/interventions/{intervention}/attributions/{attribution}', [InterventionController::class, 'updateAttribution'])->name('interventions.attributions.update');
-})*/
+});*/
 
 //Routes pour les notes
 /*Route::middleware(['auth'])->group(function () {

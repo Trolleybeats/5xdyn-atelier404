@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attribution;
 use App\Models\Intervention;
+use Dom\Attr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -75,5 +77,19 @@ class InterventionController extends Controller
     public function destroy(Intervention $intervention)
     {
         //
+    }
+
+    public function assignAttribution(Request $request, Attribution $attribution)
+    {
+        Gate::authorize('assignAttribution', $attribution);
+
+        return redirect()->back()->with('success', 'Attribution mise à jour avec succès.');
+    }
+
+    public function updateAttribution(Request $request, Attribution $attribution)
+    {
+        Gate::authorize('updateAttribution', $attribution);
+
+        return redirect()->back()->with('success', 'Attribution mise à jour avec succès.');
     }
 }
