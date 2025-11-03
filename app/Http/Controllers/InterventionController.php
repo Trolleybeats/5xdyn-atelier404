@@ -17,10 +17,10 @@ class InterventionController extends Controller
     {
         //
         Gate::authorize('viewAny', Intervention::class);
-        $interventions = Intervention::whereHas('derniere_attribution', function ($query) {
+        $interventions = Intervention::whereHas('derniereAttribution', function ($query) {
             $query->where('user_id', auth()->id());
         })
-            ->with(['typeAppareil', 'client', 'derniere_attribution.user'])
+            ->with(['typeAppareil', 'client', 'derniereAttribution.user'])
             ->paginate(15);
         return view('tech.interventions.index', [
             'interventions' => $interventions,

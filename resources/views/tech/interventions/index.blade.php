@@ -38,7 +38,7 @@
                   <td class="border px-4 py-2">{{ $intervention->statut }}</td>
                   <td class="border px-4 py-2">{{ $intervention->priorite }}</td>
                   <td class="border px-4 py-2">{{ $intervention->typeAppareil->nom }}</td>
-                  <td class="border px-4 py-2">{{ $intervention->derniere_attribution()?$intervention->derniere_attribution()->user->nom():"" }}</td>
+                  <td class="border px-4 py-2">{{ $intervention->derniereAttribution?->user->name ?? 'Non assigné'}}</td>
                   <td class="border px-4 py-2 space-x-4">
                     <div class="flex space-x-4">
                       <a
