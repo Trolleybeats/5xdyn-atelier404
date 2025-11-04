@@ -140,6 +140,19 @@
                                                 {{ $note->created_at->format('d/m/Y H:i') }}</p>
                                         </div>
                                         <p class="text-gray-700">{{ $note->contenu }}</p>
+
+                                        @if ($note->images->count() > 0)
+                            <div class="mt-2 grid grid-cols-2 md:grid-cols-3 gap-2">
+                                @foreach ($note->images as $image)
+                                    <figure class="aspect-square">
+                                        <img src="{{ Storage::url($image->path) }}" 
+                                             alt="Image de la note" 
+                                             class="w-full h-full object-cover rounded-lg shadow-sm cursor-pointer"
+                                             onclick="openImageModal('{{ Storage::url($image->path) }}')">
+                                    </figure>
+                                @endforeach
+                            </div>
+                        @endif    
                                     </div>
                                 @endforeach
                             </div>
@@ -148,7 +161,7 @@
                         @endif
                         
                         {{-- Formulaire ajout note --}}
-                        <form method="POST" action="{{ route('interventions.notes.add', $intervention) }}" class="mt-4">
+                        <form method="POST" action="{{ route('interventions.notes.add', $intervention) }}" class="mt-4" enctype="multipart/form-data">
                             @csrf
                             <label for="contenu" class="block text-sm font-medium text-gray-700 mb-2">
                                 Ajouter une note
@@ -156,6 +169,16 @@
                             <textarea name="contenu" id="contenu" rows="3" required
                                 placeholder="Décrivez les actions effectuées, les observations, etc."
                                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 mb-3"></textarea>
+
+                            <div class="mb-4">
+                                <label for="images" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Ajouter des images (optionnelles)
+                                </label>
+                                <input type="file" name="images[]" id="images" accept="image/*" multiple
+                                    class="w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                <p class="text-gray-500 text-xs mt-1">Formats acceptés: JPEG, PNG, JPG, GIF. Taille max: 5MB par image. Maximum 5 images.</p>
+                            </div>
+
                             <button type="submit"
                                 class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition">
                                 Ajouter la note

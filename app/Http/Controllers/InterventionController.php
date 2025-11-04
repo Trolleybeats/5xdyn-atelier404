@@ -137,6 +137,8 @@ class InterventionController extends Controller
 
         $request->validate([
             'contenu' => 'required|string',
+            'images' => 'nullable|array|max:5',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
         $notes = $intervention->notes()->make();
@@ -144,6 +146,15 @@ class InterventionController extends Controller
         $notes->user_id = Auth::user()->id;
         $notes->contenu = $request->input('contenu');
         $notes->save();
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('notes', 'public');
+                $notes->images()->create([
+                    'path' => $path,
+                ]);
+            }
+        }
 
         return redirect()->route('tech.interventions.show', $intervention)->with('success', 'Note ajoutée avec succès.');
     }

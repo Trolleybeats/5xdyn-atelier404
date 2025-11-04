@@ -35,9 +35,22 @@
                                             <strong>{{ $note->user->name }}</strong> - 
                                             {{ \Illuminate\Support\Carbon::parse($note->created_at)->format('d/m/Y H:i') }}
                                         </p>
-                                        <p class="mt-1">{{ $note->contenu }}</p>
+                        <p class="mt-1">{{ $note->contenu }}</p>
 
-                                        <div class="flex justify-end">
+                        @if ($note->images->count() > 0)
+                            <div class="mt-2 grid grid-cols-2 md:grid-cols-3 gap-2">
+                                @foreach ($note->images as $image)
+                                    <figure class="aspect-square">
+                                        <img src="{{ Storage::url($image->path) }}" 
+                                             alt="Image de la note" 
+                                             class="w-full h-full object-cover rounded-lg shadow-sm cursor-pointer"
+                                             onclick="openImageModal('{{ Storage::url($image->path) }}')">
+                                    </figure>
+                                @endforeach
+                            </div>
+                        @endif                                        
+                        
+                        <div class="flex justify-end">
                                 @can('delete', $note)
                                     <button x-data="{ id: {{ $note->id }} }"
                                         x-on:click.prevent="window.selected = id; $dispatch('open-modal', 'confirm-note-deletion');"
