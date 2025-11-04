@@ -32,16 +32,22 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 
     // Gestion des utilisateurs (Détails et changement de rôle)
     Route::resource('/users', UserController::class);
-
-    // Gestion des interventions (Vue admin)
-    Route::resource('/interventions', AdminInterventionController::class);
 });
 
 //Routes pour la gestion des interventions (Vue technicien)
 Route::middleware(['auth', 'verified'])->prefix('tech')->name('tech.')->group(function () {
-    Route::resource('/interventions', InterventionController::class)->only(['index', 'show', 'edit', 'update']);
+    Route::resource('/interventions', InterventionController::class);
 });
 
+//Routes pour la gestion des interventions (Vue admin)
+Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
+    Route::resource('/interventions', AdminInterventionController::class);
+});
+
+//Routes pour les clients
+Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
+    Route::resource('/clients', \App\Http\Controllers\Admin\ClientController::class);
+});
 
 //Routes pour les attributions
 /*Route::middleware(['auth', 'verified'])->group(function () {
