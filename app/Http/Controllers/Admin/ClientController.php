@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Client;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class ClientController extends Controller
 {
@@ -55,8 +56,12 @@ class ClientController extends Controller
     {
         //
         Gate::authorize('view', $client);
+         // Charger tous les techniciens pour la liste déroulante
+        $techniciens = User::whereIn('role', ['admin', 'technicien'])->get();
+
         return view('admin.clients.show', [
             'client' => $client,
+            'techniciens' => $techniciens,
         ]);
     }
 

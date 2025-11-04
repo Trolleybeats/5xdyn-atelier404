@@ -9,17 +9,32 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
-                    <div class="flex justify-between mt-8">
-                        <div class="text-2xl">Liste des Interventions</div>
+                    <div
+                        class="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-4 sm:mt-8 space-y-4 sm:space-y-0">
+                        <div class="text-xl sm:text-2xl font-semibold text-gray-800">Liste des Interventions</div>
 
-                        <div class="flex  items-center justify-center space-x-8">
+                        <div class="w-full sm:w-auto">
                             <a href="{{ route('admin.interventions.create') }}"
-                                class="text-gray-500 font-bold py-2 px-4 rounded hover:bg-gray-200 transition">Ajouter
-                                une intervention
+                                class="w-full sm:w-auto inline-flex justify-center items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-200">
+                                Ajouter une intervention
                             </a>
                         </div>
                     </div>
 
+                    <div class="mt-6">
+                        <!-- Version desktop (tableau) -->
+                        <div class="hidden md:block overflow-x-auto">
+                            <table class="table-auto w-full">
+                                <thead>
+                                    <tr class="uppercase text-left bg-gray-50">
+                                        <th class="px-4 py-3 border text-xs font-semibold text-gray-600">statut</th>
+                                        <th class="px-4 py-3 border text-xs font-semibold text-gray-600">priorité</th>
+                                        <th class="px-4 py-3 border text-xs font-semibold text-gray-600">Appareil</th>
+                                        <th class="px-4 py-3 border text-xs font-semibold text-gray-600">Date prévue
+                                        </th>
+                                        <th class="px-4 py-3 border text-xs font-semibold text-gray-600">Technicien</th>
+                                        <th class="px-4 py-3 border text-xs font-semibold text-gray-600 text-center">
+                                            Actions</th>
                     <div class="mt-6 text-gray-500">
                         <table class="table-auto w-full">
                             <thead>
@@ -73,10 +88,144 @@
                                             </div>
                                         </td>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach ($interventions as $intervention)
+                                        <tr class="hover:bg-gray-50 odd:bg-gray-100 hover:odd:bg-gray-200 transition">
+                                            <td class="border px-4 py-3">
+                                                <span
+                                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                        {{ $intervention->statut === 'Nouvelle_demande' ? 'bg-purple-100 text-purple-800  ' : '' }}
+                         {{ $intervention->statut === 'Diagnostic' ? 'bg-blue-100 text-blue-800 ' : '' }}
+                         {{ $intervention->statut === 'En_réparations' ? 'bg-teal-100 text-teal-800 ' : '' }}
+                         {{ $intervention->statut === 'Terminé' ? 'bg-green-100 text-green-800 ' : '' }}
+                        {{ $intervention->statut === 'Non_réparable' ? 'bg-fuchsia-100 text-fuchsia-800  ' : '' }}">
+                                                    {{ $intervention->statut === 'Nouvelle_demande' ? 'Nouvelle demande' : '' }}
+                                                    {{ $intervention->statut === 'Diagnostic' ? 'Diagnostic' : '' }}
+                                                    {{ $intervention->statut === 'En_réparations' ? 'En réparations' : '' }}
+                                                    {{ $intervention->statut === 'Terminé' ? 'terminé' : '' }}
+                                                    {{ $intervention->statut === 'Non_réparable' ? 'non réparable' : '' }}
+                                                </span>
+                                            </td>
+                                            <td
+                                                class="border
+                                                px-4 py-3">
+                                                <span
+                                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                        {{ $intervention->priorite === 'faible' ? 'bg-lime-100 text-lime-800  ' : '' }}
+                         {{ $intervention->priorite === 'moyenne' ? 'bg-yellow-100 text-yellow-800 ' : '' }}
+                         {{ $intervention->priorite === 'eleve' ? 'bg-orange-100 text-orange-800 ' : '' }}
+                        {{ $intervention->priorite === 'critique' ? 'bg-red-100 text-red-800  ' : '' }}">
+                                                    {{ $intervention->priorite === 'faible' ? 'faible' : '' }}
+                                                    {{ $intervention->priorite === 'moyenne' ? 'moyenne' : '' }}
+                                                    {{ $intervention->priorite === 'eleve' ? 'élevée' : '' }}
+                                                    {{ $intervention->priorite === 'critique' ? 'critique' : '' }}
+                                                </span>
+                                            </td>
+                                            <td class="border px-4 py-3">{{ $intervention->typeAppareil->nom }}</td>
+                                            <td class="border px-4 py-3">
+                                                {{ \Illuminate\Support\Carbon::parse($intervention->date_prevue)->format('d/m/Y') }}
+                                            </td>
+                                            <td class="border px-4 py-3">
+                                                <form method="POST"
+                                                    action="{{ route('admin.interventions.attributions.assign', $intervention) }}">
+                                                    @csrf
+                                                    <select name="user_id" onchange="this.form.submit()"
+                                                        class="border border-gray-300 rounded px-2 py-1">
+                                                        <option value="">Non assigné</option>
+                                                        @foreach ($techniciens as $technicien)
+                                                            <option value="{{ $technicien->id }}"
+                                                                {{ $intervention->derniereAttribution && $intervention->derniereAttribution->user_id == $technicien->id ? 'selected' : '' }}>
+                                                                {{ $technicien->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </form>
+                                            </td>
+                                            <td class="border px-4 py-3">
+                                                <div class="flex justify-center space-x-3">
+                                                    <a href="{{ route('admin.interventions.edit', $intervention) }}"
+                                                        class="text-blue-500 hover:text-blue-700 font-medium text-sm transition">
+                                                        Modifier
+                                                    </a>
+                                                    <button x-data="{ id: {{ $intervention->id }} }"
+                                                        x-on:click.prevent="window.selected = id; $dispatch('open-modal', 'confirm-user-deletion');"
+                                                        class="text-red-500 hover:text-red-700 font-medium text-sm transition">
+                                                        Supprimer
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Version mobile (cartes) -->
+                        <div class="md:hidden space-y-4">
+                            @foreach ($interventions as $intervention)
+                                <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-4">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <div class="flex-1">
+                                            <p class="text-sm font-semibold text-gray-900">{{ $intervention->typeAppareil->nom }}</p>
+                                            <p class="text-xs text-gray-500">{{ \Illuminate\Support\Carbon::parse($intervention->date_prevue)->format('d/m/Y') }}</p>
+                                        </div>
+                                        <div class="flex flex-col space-y-1 ml-2">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                                                {{ $intervention->statut === 'Nouvelle_demande' ? 'bg-purple-100 text-purple-800' : '' }}
+                                                {{ $intervention->statut === 'Diagnostic' ? 'bg-blue-100 text-blue-800' : '' }}
+                                                {{ $intervention->statut === 'En_réparations' ? 'bg-teal-100 text-teal-800' : '' }}
+                                                {{ $intervention->statut === 'Terminé' ? 'bg-green-100 text-green-800' : '' }}
+                                                {{ $intervention->statut === 'Non_réparable' ? 'bg-fuchsia-100 text-fuchsia-800' : '' }}">
+                                                {{ $intervention->statut === 'Nouvelle_demande' ? 'Nouvelle demande' : '' }}
+                                                {{ $intervention->statut === 'Diagnostic' ? 'Diagnostic' : '' }}
+                                                {{ $intervention->statut === 'En_réparations' ? 'En réparations' : '' }}
+                                                {{ $intervention->statut === 'Terminé' ? 'terminé' : '' }}
+                                                {{ $intervention->statut === 'Non_réparable' ? 'non réparable' : '' }}
+                                            </span>
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                                                {{ $intervention->priorite === 'faible' ? 'bg-lime-100 text-lime-800' : '' }}
+                                                {{ $intervention->priorite === 'moyenne' ? 'bg-yellow-100 text-yellow-800' : '' }}
+                                                {{ $intervention->priorite === 'eleve' ? 'bg-orange-100 text-orange-800' : '' }}
+                                                {{ $intervention->priorite === 'critique' ? 'bg-red-100 text-red-800' : '' }}">
+                                                {{ $intervention->priorite === 'faible' ? 'faible' : '' }}
+                                                {{ $intervention->priorite === 'moyenne' ? 'moyenne' : '' }}
+                                                {{ $intervention->priorite === 'eleve' ? 'élevée' : '' }}
+                                                {{ $intervention->priorite === 'critique' ? 'critique' : '' }}
+                                            </span>
+                                        </div>
+                                    </div>
 
+                                    <div class="mb-3">
+                                        <form method="POST"
+                                            action="{{ route('admin.interventions.attributions.assign', $intervention) }}">
+                                            @csrf
+                                            <select name="user_id" onchange="this.form.submit()"
+                                                class="w-full border border-gray-300 rounded px-3 py-2 text-sm">
+                                                <option value="">Non assigné</option>
+                                                @foreach ($techniciens as $technicien)
+                                                    <option value="{{ $technicien->id }}"
+                                                        {{ $intervention->derniereAttribution && $intervention->derniereAttribution->user_id == $technicien->id ? 'selected' : '' }}>
+                                                        {{ $technicien->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </form>
+                                    </div>
+
+                                    <div class="flex space-x-2 pt-3 border-t border-gray-100">
+                                        <a href="{{ route('admin.interventions.edit', $intervention) }}"
+                                            class="flex-1 bg-blue-50 hover:bg-blue-100 text-blue-600 text-center py-2 px-3 rounded-md text-sm font-medium transition">
+                                            Modifier
+                                        </a>
+                                        <button x-data="{ id: {{ $intervention->id }} }"
+                                            x-on:click.prevent="window.selected = id; $dispatch('open-modal', 'confirm-user-deletion');"
+                                            class="flex-1 bg-red-50 hover:bg-red-100 text-red-600 text-center py-2 px-3 rounded-md text-sm font-medium transition">
+                                            Supprimer
+                                        </button>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                         <div class="mt-4">{{ $interventions->links() }}</div>
                     </div>
                 </div>

@@ -17,7 +17,7 @@ class TypeAppareilFactory extends Factory
     public function definition(): array
     {
         return [
-            'nom' => $this->faker->unique()->word(),
+            'nom' => fake()->unique()->word(),
         ];
     }
 }
