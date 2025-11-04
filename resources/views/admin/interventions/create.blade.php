@@ -4,7 +4,7 @@
 @endphp
 <div class="mb-8 p-4 bg-white rounded shadow">
     <h2 class="text-2xl font-bold mb-4 ">Formulaire d'inscription</h2>
-    <form method="POST" action="{{ route('interventions.store') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('interventions.store') }}" >
         @csrf
         <x-fieldset-client/>
         <fieldset class="mt-4 border rounded px-1 py-1
@@ -22,12 +22,6 @@
                 <x-input-label for="description" :value="__('description')" />
                 <textarea name="description" id="description" class="w-full" ></textarea>
             </div>
-
-             <div>
-                    <x-input-label for="img" :value="__('Image')" />
-                    <x-text-input id="img" class="block mt-1 w-full" type="file" name="img" />
-                    <x-input-error :messages="$errors->get('img')" class="mt-2" />
-                </div>
         </fieldset>
         <x-primary-button >Envoyer</x-primary-button>
     </form>

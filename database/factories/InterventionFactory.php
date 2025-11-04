@@ -18,6 +18,12 @@ class InterventionFactory extends Factory
     {
         return [
             //
+            'description' => $this->faker->paragraph(),
+            'statut' => $this->faker->randomElement(['Nouvelle_demande','Diagnostic','En_réparations','Terminé','Non_réparable']),
+            'date_prevue' => $this->faker->dateTimeBetween('now', '+1 month'),
+            'priorite' => $this->faker->randomElement(['faible','moyenne','eleve','critique']),
+            'type_appareil_id' => \App\Models\TypeAppareil::get()->random()->id,
+            'client_id' => \App\Models\Client::get()->random()->id,
         ];
     }
 }

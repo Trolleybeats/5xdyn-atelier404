@@ -4,9 +4,8 @@
         @forelse ($collection as $item)
             <option value="{{ $item->id }}">{{ $item->nom }}</option>
         @empty
-            <option value = "aucun">aucun appareils</option>
+            <option value = "aucun">aucun appareils en db</option>
         @endforelse
-        <option value="nouveau">Appareil inconnu</option>
     </select>
 
 </div>

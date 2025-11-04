@@ -14,7 +14,7 @@ class Intervention extends Model
         'description',
         'statut',
         'date_prevue',
-        'priorité',
+        'priorite',
         'type_appareil_id',
         'client_id',
     ];
@@ -32,5 +32,10 @@ class Intervention extends Model
     }
     public function notes(){
         return $this->hasMany(Note::class);
+    }
+
+    public function derniereAttribution()
+    {
+        return $this->hasOne(Attribution::class)->latestOfMany();
     }
 }
