@@ -6,7 +6,6 @@ use App\Http\Controllers\Admin\InterventionController as AdminInterventionContro
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InterventionController;
 use App\Models\Intervention;
-use App\Http\Controllers\InterventionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
