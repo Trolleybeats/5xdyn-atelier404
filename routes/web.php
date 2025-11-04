@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\InterventionController as AdminInterventionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InterventionController;
-
+use App\Models\Intervention;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -55,17 +55,18 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('/clients', \App\Http\Controllers\Admin\ClientController::class);
 });
 
-//Routes pour les attributions
-/*Route::middleware(['auth', 'verified'])->group(function () {
-    Route::post('/interventions/{intervention}/assign', [InterventionController::class, 'assignIntervention'])->name('interventions.attributions.assign');
-    Route::patch('/interventions/{intervention}/attributions/{attribution}', [InterventionController::class, 'updateAttribution'])->name('interventions.attributions.update');
-});*/
+
+//Routes pour la gestion des interventions (Vue technicien)
+Route::middleware(['auth', 'verified'])->prefix('tech')->name('tech.')->group(function () {
+    Route::resource('/interventions', InterventionController::class)->only(['index', 'show', 'edit', 'update']);
+});
+
 
 //Routes pour les notes
-/*Route::middleware(['auth'])->group(function () {
-    Route::post('/interventions/{intervention}/notes', [NoteController::class, 'addNote'])->name('interventions.notes.add');
-    Route::delete('/interventions/{intervention}/notes/{note}', [NoteController::class, 'deleteNote'])->name('interventions.notes.delete');
-});*/
+Route::middleware(['auth'])->group(function () {
+    Route::post('/interventions/{intervention}/notes', [InterventionController::class, 'addNote'])->name('interventions.notes.add');
+    Route::delete('/interventions/{intervention}/notes/{note}', [InterventionController::class, 'deleteNote'])->name('interventions.notes.delete');
+});
 
 //Routes pour les images
 /*Route::post('/interventions/{intervention}/images', [ImageController::class, 'addImage'])->name('interventions.images.add');*/

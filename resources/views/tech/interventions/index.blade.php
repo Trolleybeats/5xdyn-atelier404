@@ -114,6 +114,48 @@
                                         </span>
                                     </div>
                                 </div>
+          <div class="mt-6 text-gray-500">
+            <table class="table-auto w-full">
+              <thead>
+                <tr class="uppercase text-left">
+                  <th class="px-4 py-2 border">statut</th>
+                  <th class="px-4 py-2 border">priorite</th>
+                  <th class="px-4 py-2 border">Appareil</th>
+                  <th class="px-4 py-2 border">Date prévue</th>
+                  <th class="px-4 py-2 border">Technicien</th>
+                  <th class="px-4 py-2 border">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($interventions as $intervention)
+                <tr
+                  class="hover:bg-gray-50 odd:bg-gray-100 hover:odd:bg-gray-200 transition"
+                >
+                  <td class="border px-4 py-2">{{ $intervention->statut }}</td>
+                  <td class="border px-4 py-2">{{ $intervention->priorite }}</td>
+                  <td class="border px-4 py-2">{{ $intervention->typeAppareil->nom }}</td>
+                  <td class="border px-4 py-2">{{ $intervention->date_prevue }} </td>
+                  <td class="border px-4 py-2">{{ $intervention->derniereAttribution?->user->name ?? 'Non assigné'}}</td>
+                  <td class="border px-4 py-2 space-x-4">
+                    <div class="flex space-x-4">
+                      <a
+                        href="{{ route('tech.interventions.edit', $intervention) }}"
+                        class="text-blue-400"
+                      >
+                        Modifier
+                      </a>
+                      <a
+                        href="{{ route('tech.interventions.show', $intervention) }}"
+                        class="text-green-600"
+                      >
+                        Détails
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
 
                                 <div class="flex space-x-2 pt-3 border-t border-gray-100">
                                     <a href="{{ route('tech.interventions.edit', $intervention) }}"

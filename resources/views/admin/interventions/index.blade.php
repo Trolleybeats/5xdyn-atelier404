@@ -35,6 +35,58 @@
                                         <th class="px-4 py-3 border text-xs font-semibold text-gray-600">Technicien</th>
                                         <th class="px-4 py-3 border text-xs font-semibold text-gray-600 text-center">
                                             Actions</th>
+                    <div class="mt-6 text-gray-500">
+                        <table class="table-auto w-full">
+                            <thead>
+                                <tr class="uppercase text-left">
+                                    <th class="px-4 py-2 border">statut</th>
+                                    <th class="px-4 py-2 border">priorite</th>
+                                    <th class="px-4 py-2 border">Appareil</th>
+                                    <th class="px-4 py-2 border">Date prévue</th>
+                                    <th class="px-4 py-2 border">Technicien</th>
+                                    <th class="px-4 py-2 border">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($interventions as $intervention)
+                                    <tr class="hover:bg-gray-50 odd:bg-gray-100 hover:odd:bg-gray-200 transition">
+                                        <td class="border px-4 py-2">{{ $intervention->statut }}</td>
+                                        <td class="border px-4 py-2">{{ $intervention->priorite }}</td>
+                                        <td class="border px-4 py-2">{{ $intervention->typeAppareil->nom }}</td>
+                                        <td class="border px-4 py-2">
+                                            {{ \Illuminate\Support\Carbon::parse($intervention->date_prevue)->format('d/m/Y') }}
+                                        </td>
+                                        <td class="border px-4 py-2">
+                                            <form method="POST" action="{{ route('admin.interventions.attributions.assign', $intervention) }}">
+                                                @csrf
+                                                <select name="user_id" onchange="this.form.submit()" class="border border-gray-300 rounded px-2 py-1">
+                                                    <option value="">Non assigné</option>
+                                                    @foreach($techniciens as $technicien)
+                                                        <option value="{{ $technicien->id }}" {{ $intervention->derniereAttribution && $intervention->derniereAttribution->user_id == $technicien->id ? 'selected' : '' }}>
+                                                            {{ $technicien->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </form>
+                                        </td>
+                                        <td class="border px-4 py-2 space-x-4">
+                                            <div class="flex space-x-4">
+
+                                              <a href="{{ route('tech.interventions.show', $intervention) }}"
+                                                    class="text-green-600">
+                                                    Détails
+                                                </a>
+
+                                                <a href="{{ route('admin.interventions.edit', $intervention) }}"
+                                                    class="text-blue-400">
+                                                    Modifier
+                                                </a>
+
+                                                <button x-data="{ id: {{ $intervention->id }} }"
+                                                    x-on:click.prevent="window.selected = id; $dispatch('open-modal', 'confirm-user-deletion');"
+                                                    type="submit" class="text-red-400">Supprimer</button>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </thead>
                                 <tbody>

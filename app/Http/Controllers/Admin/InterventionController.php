@@ -52,9 +52,24 @@ class InterventionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Intervention $intervention)
+    public function show($id)
     {
-        //
+        {
+        
+        $intervention = Intervention::findOrFail($id);
+        Gate::authorize('viewAny', $intervention);
+
+        $notes = $intervention
+            ->notes()
+            ->with('user')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('tech.interventions.show', [
+            'intervention' => $intervention,
+            'notes' => $notes,
+        ]);
+    }
     }
 
     /**
@@ -64,8 +79,16 @@ class InterventionController extends Controller
     {
         //
         Gate::authorize('update', $intervention);
+        
+        // Charger les relations nécessaires
+        $intervention->load(['client', 'typeAppareil', 'derniereAttribution.user']);
+        
+        // Charger les techniciens pour la liste déroulante
+        $techniciens = User::whereIn('role', ['admin', 'technicien'])->get();
+        
         return view('admin.interventions.edit', [
             'intervention' => $intervention,
+            'techniciens' => $techniciens,
         ]);
     }
 
