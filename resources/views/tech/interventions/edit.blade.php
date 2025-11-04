@@ -146,9 +146,9 @@
                         @else
                             <p class="text-gray-500 italic mb-4">Aucune note pour le moment</p>
                         @endif
-                        {{--
-                        {{-- Formulaire ajout note }}
-                        <form method="POST" action="{{-- route('interventions.notes.store', $intervention) }}" class="mt-4">
+                        
+                        {{-- Formulaire ajout note --}}
+                        <form method="POST" action="{{ route('interventions.notes.add', $intervention) }}" class="mt-4">
                             @csrf
                             <label for="contenu" class="block text-sm font-medium text-gray-700 mb-2">
                                 Ajouter une note
@@ -161,7 +161,7 @@
                                 Ajouter la note
                             </button>
                         </form>
-                        --}}
+                        
                     </div>
                 </div>
             </div>

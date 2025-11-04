@@ -49,6 +49,12 @@
                       >
                         Modifier
                       </a>
+                      <a
+                        href="{{ route('tech.interventions.show', $intervention) }}"
+                        class="text-green-600"
+                      >
+                        Détails
+                      </a>
                     </div>
                   </td>
                 </tr>

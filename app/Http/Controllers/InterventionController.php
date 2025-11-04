@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Intervention;
+use App\Models\Note;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 
@@ -75,9 +77,22 @@ class InterventionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Intervention $intervention)
+    public function show($id)
     {
-        //
+        
+        $intervention = Intervention::findOrFail($id);
+        Gate::authorize('viewOwn', $intervention);
+
+        $notes = $intervention
+            ->notes()
+            ->with('user')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('tech.interventions.show', [
+            'intervention' => $intervention,
+            'notes' => $notes,
+        ]);
     }
 
     /**
@@ -114,5 +129,31 @@ class InterventionController extends Controller
     public function destroy(Intervention $intervention)
     {
         //
+    }
+
+    public function addNote(Request $request, Intervention $intervention)
+    {
+        Gate::authorize('viewOwn', $intervention);
+
+        $request->validate([
+            'contenu' => 'required|string',
+        ]);
+
+        $notes = $intervention->notes()->make();
+
+        $notes->user_id = Auth::user()->id;
+        $notes->contenu = $request->input('contenu');
+        $notes->save();
+
+        return redirect()->route('tech.interventions.show', $intervention)->with('success', 'Note ajoutée avec succès.');
+    }
+
+    public function deleteNote(Intervention $intervention, Note $note)
+    {
+        Gate::authorize('delete', $note);
+
+        $note->delete();
+
+        return redirect()->route('tech.interventions.show', $intervention)->with('success', 'Note supprimée avec succès.');
     }
 }
