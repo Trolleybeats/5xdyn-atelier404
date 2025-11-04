@@ -30,14 +30,14 @@
                         </x-nav-link>
                     @endcan
 
-                    
+
                     <x-nav-link
-                        :href="route('admin.interventions.index')"
-                        :active="request()->routeIs('admin.interventions.*')"
+                        :href="route('admin.clients.index')"
+                        :active="request()->routeIs('admin.clients.*')"
                     >
-                        {{ __('Interventions') }}
+                        {{ __('Clients') }}
                     </x-nav-link>
-                    
+
                 </div>
             </div>
 
@@ -110,14 +110,20 @@
           </x-responsive-nav-link>
           @endcan
 
-          
+
             <x-responsive-nav-link
                 :href="route('admin.interventions.index')"
                 :active="request()->routeIs('admin.interventions.*')"
             >
                 {{ __('Interventions') }}
             </x-responsive-nav-link>
-            
+            <x-responsive-nav-link
+                :href="route('admin.clients.index')"
+                :active="request()->routeIs('admin.clients.*')"
+            >
+                {{ __('Clients') }}
+            </x-responsive-nav-link>
+
         </div>
 
         <!-- Responsive Settings Options -->
