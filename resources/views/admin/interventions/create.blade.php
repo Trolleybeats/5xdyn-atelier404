@@ -1,7 +1,5 @@
 <x-app-layout>
-@php
-    use App\Models\TypeAppareil;
-@endphp
+
 <div class="mb-8 p-4 bg-white rounded shadow">
     <h2 class="text-2xl font-bold mb-4 ">Formulaire d'inscription</h2>
     <form method="POST" action="{{ route('interventions.store') }}" >
@@ -14,7 +12,7 @@
             <div>
 
                 <x-input-label for="typeAppareil" :value="__('typeAppareil')" />
-                <x-selection-type-appareil id="typeAppareil" name="typeAppareil" :collection="TypeAppareil::getAll()"
+                <x-selection-type-appareil id="typeAppareil" name="typeAppareil" :collection="App\Models\TypeAppareil::getAll()"
                     class="block mt-1 w-full"></x-selection-type-appareil>
                 <x-input-error :messages="$errors->get('typeAppareil')" class="mt-2" />
             </div>

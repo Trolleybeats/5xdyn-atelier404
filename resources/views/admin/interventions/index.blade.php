@@ -35,19 +35,49 @@
                             <tbody>
                                 @foreach ($interventions as $intervention)
                                     <tr class="hover:bg-gray-50 odd:bg-gray-100 hover:odd:bg-gray-200 transition">
-                                        <td class="border px-4 py-2">{{ $intervention->statut }}</td>
-                                        <td class="border px-4 py-2">{{ $intervention->priorite }}</td>
+                                        <td class="border px-4 py-2">
+                                            <span
+                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                        {{ $intervention->statut === 'Nouvelle_demande' ? 'bg-purple-100 text-purple-800  ' : '' }}
+                         {{ $intervention->statut === 'Diagnostic' ? 'bg-blue-100 text-blue-800 ' : '' }}
+                         {{ $intervention->statut === 'En_réparations' ? 'bg-teal-100 text-teal-800 ' : '' }}
+                         {{ $intervention->statut === 'Terminé' ? 'bg-green-100 text-green-800 ' : '' }}
+                        {{ $intervention->statut === 'Non_réparable' ? 'bg-fuchsia-100 text-fuchsia-800  ' : '' }}">
+                                                {{ $intervention->statut === 'Nouvelle_demande' ? 'Nouvelle demande' : '' }}
+                                                {{ $intervention->statut === 'Diagnostic' ? 'Diagnostic' : '' }}
+                                                {{ $intervention->statut === 'En_réparations' ? 'En réparations' : '' }}
+                                                {{ $intervention->statut === 'Terminé' ? 'terminé' : '' }}
+                                                {{ $intervention->statut === 'Non_réparable' ? 'non réparable' : '' }}
+                                            </span>
+                                        </td>
+                                        <td class="border
+                                                px-4 py-2">
+                                                <span
+                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                        {{ $intervention->priorite === 'faible' ? 'bg-lime-100 text-lime-800  ' : '' }}
+                         {{ $intervention->priorite === 'moyenne' ? 'bg-yellow-100 text-yellow-800 ' : '' }}
+                         {{ $intervention->priorite === 'eleve' ? 'bg-orange-100 text-orange-800 ' : '' }}
+                        {{ $intervention->priorite === 'critique' ? 'bg-red-100 text-red-800  ' : '' }}">
+                                                {{ $intervention->priorite === 'faible' ? 'faible' : '' }}
+                                                {{ $intervention->priorite === 'moyenne' ? 'moyenne' : '' }}
+                                                {{ $intervention->priorite === 'eleve' ? 'élevée' : '' }}
+                                                {{ $intervention->priorite === 'critique' ? 'critique' : '' }}
+                                            </span>
+                                        </td>
                                         <td class="border px-4 py-2">{{ $intervention->typeAppareil->nom }}</td>
                                         <td class="border px-4 py-2">
                                             {{ \Illuminate\Support\Carbon::parse($intervention->date_prevue)->format('d/m/Y') }}
                                         </td>
                                         <td class="border px-4 py-2">
-                                            <form method="POST" action="{{ route('admin.interventions.attributions.assign', $intervention) }}">
+                                            <form method="POST"
+                                                action="{{ route('admin.interventions.attributions.assign', $intervention) }}">
                                                 @csrf
-                                                <select name="user_id" onchange="this.form.submit()" class="border border-gray-300 rounded px-2 py-1">
+                                                <select name="user_id" onchange="this.form.submit()"
+                                                    class="border border-gray-300 rounded px-2 py-1">
                                                     <option value="">Non assigné</option>
-                                                    @foreach($techniciens as $technicien)
-                                                        <option value="{{ $technicien->id }}" {{ $intervention->derniereAttribution && $intervention->derniereAttribution->user_id == $technicien->id ? 'selected' : '' }}>
+                                                    @foreach ($techniciens as $technicien)
+                                                        <option value="{{ $technicien->id }}"
+                                                            {{ $intervention->derniereAttribution && $intervention->derniereAttribution->user_id == $technicien->id ? 'selected' : '' }}>
                                                             {{ $technicien->name }}
                                                         </option>
                                                     @endforeach
