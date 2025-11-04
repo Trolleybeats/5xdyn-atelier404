@@ -69,7 +69,7 @@
                                 <thead>
                                     <tr class="uppercase text-left text-sm">
                                         <th class="px-4 py-2 border bg-gray-50">Date</th>
-                                        <th class="px-4 py-2 border bg-gray-50">Type</th>
+                                        <th class="px-4 py-2 border bg-gray-50">Appareil</th>
                                         <th class="px-4 py-2 border bg-gray-50">Description</th>
                                         <th class="px-4 py-2 border bg-gray-50">Statut</th>
                                         <th class="px-4 py-2 border bg-gray-50">Technicien</th>
@@ -92,7 +92,17 @@
                                             </span>
                                         </td>
                                         <td class="border px-4 py-2">
-                                            {{ $intervention->derniereAttribution?->user->name ?? 'Non assigné' }}
+                                           <form method="POST" action="{{ route('admin.interventions.attributions.assign', $intervention) }}">
+                                                @csrf
+                                                <select name="user_id" onchange="this.form.submit()" class="border border-gray-300 rounded px-2 py-1">
+                                                    <option value="">Non assigné</option>
+                                                    @foreach($techniciens as $technicien)
+                                                        <option value="{{ $technicien->id }}" {{ $intervention->derniereAttribution && $intervention->derniereAttribution->user_id == $technicien->id ? 'selected' : '' }}>
+                                                            {{ $technicien->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </form>
                                         </td>
                                         <td class="border px-4 py-2">
                                             <a href="{{ route('admin.interventions.edit', $intervention) }}"
