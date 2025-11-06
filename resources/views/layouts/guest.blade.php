@@ -16,11 +16,12 @@
     </head>
     <body class="font-sans text-[#1F2937] antialiased">
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-white text-[#1F2937]">
-            <div>
-
+            <div class="flex flex-col">
+                
                 <a href="/login">
-                    <x-application-logo class="w-20 h-20 fill-current text-[#1F2937]" />
-
+                    <button class="mt-4 text-gray-600 hover:text-gray-900 underline">
+                        Se connecter
+                    </button>
                 </a>
             </div>
 
