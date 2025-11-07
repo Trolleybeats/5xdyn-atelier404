@@ -35,6 +35,37 @@
     </div>
 @endif
 
+<div class="flex justify-center mb-6">
+                
+                @if (Route::has('login'))
+                <nav class="flex items-center justify-end gap-4">
+                    @auth
+                        <a
+                            href="{{ url('/dashboard') }}"
+                            class='inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150'
+                        >
+                            Tableau de bord
+                        </a>
+                    @else
+                        <a
+                            href="{{ route('login') }}"
+                            class='inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150'
+                        >
+                            Se connecter
+                        </a>
+
+                        @if (Route::has('register'))
+                            <a
+                                href="{{ route('register') }}"
+                                class='inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150'>
+                                S'inscrire
+                            </a>
+                        @endif
+                    @endauth
+                </nav>
+            @endif
+            </div>
+
 {{-- Présentation Atelier 404 --}}
 <div class="mb-8 p-4 bg-[#E5E7EB] rounded shadow">
     <h1 class="text-2xl font-bold mb-2 text-[#1F2937]">Bienvenue à l'Atelier 404</h1>
