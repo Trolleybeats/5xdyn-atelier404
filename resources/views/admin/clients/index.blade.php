@@ -47,7 +47,7 @@
                                                 <div class="flex justify-center space-x-3">
                                                     <a href="{{ route('admin.clients.show', $client) }}"
                                                         class="text-green-500 hover:text-green-700 font-medium text-sm transition">
-                                                        Voir
+                                                        Détails
                                                     </a>
                                                     <a href="{{ route('admin.clients.edit', $client) }}"
                                                         class="text-blue-500 hover:text-blue-700 font-medium text-sm transition">
@@ -79,7 +79,7 @@
         <div class="flex space-x-2 pt-3 border-t border-gray-100">
             <a href="{{ route('admin.clients.show', $client) }}"
                class="flex-1 bg-green-50 hover:bg-green-100 text-green-600 text-center py-2 px-3 rounded-md text-sm font-medium transition">
-                Voir
+                Détails
             </a>
             <a href="{{ route('admin.clients.edit', $client) }}"
                class="flex-1 bg-blue-50 hover:bg-blue-100 text-blue-600 text-center py-2 px-3 rounded-md text-sm font-medium transition">
