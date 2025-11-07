@@ -21,10 +21,10 @@ class InterventionController extends Controller
         $interventions = Intervention::with(['typeAppareil', 'client', 'derniereAttribution.user'])
             ->latest()
             ->paginate(10);
-            
+
         // Charger tous les techniciens pour la liste déroulante
         $techniciens = User::whereIn('role', ['admin', 'technicien'])->get();
-        
+
         return view('admin.interventions.index', [
             'interventions' => $interventions,
             'techniciens' => $techniciens,
@@ -55,7 +55,7 @@ class InterventionController extends Controller
     public function show($id)
     {
         {
-        
+
         $intervention = Intervention::findOrFail($id);
         Gate::authorize('viewAny', $intervention);
 
@@ -79,13 +79,13 @@ class InterventionController extends Controller
     {
         //
         Gate::authorize('update', $intervention);
-        
+
         // Charger les relations nécessaires
         $intervention->load(['client', 'typeAppareil', 'derniereAttribution.user']);
-        
+
         // Charger les techniciens pour la liste déroulante
         $techniciens = User::whereIn('role', ['admin', 'technicien'])->get();
-        
+
         return view('admin.interventions.edit', [
             'intervention' => $intervention,
             'techniciens' => $techniciens,
@@ -119,8 +119,8 @@ class InterventionController extends Controller
 
         if ($request->user_id) {
             // Supprimer les anciennes attributions pour cette intervention
-            $intervention->attributions()->delete();
-            
+            // $intervention->attributions()->delete();
+
             // Créer une nouvelle attribution
             Attribution::create([
                 'intervention_id' => $intervention->id,
@@ -131,7 +131,7 @@ class InterventionController extends Controller
         } else {
             // Si pas de technicien sélectionné, supprimer les attributions existantes
             $intervention->attributions()->delete();
-            
+
             return redirect()->back()->with('success', 'Attribution supprimée avec succès.');
         }
     }
@@ -142,4 +142,5 @@ class InterventionController extends Controller
 
         return redirect()->back()->with('success', 'Attribution mise à jour avec succès.');
     }
+
 }

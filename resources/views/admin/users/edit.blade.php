@@ -17,7 +17,7 @@
 
 
             <div class="flex text-gray-500">
-                
+
                 <dl class="mt-6 space-y-6">
                     <div class="flex space-x-4">
                         <dt class="text-sm font-medium text-gray-500 w-20 text-right">
@@ -43,9 +43,51 @@
                             {{ $user->role }}
                         </dd>
                     </div>
+
                 </dl>
             </div>
         </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-8">
+        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
+            <div class="flex justify-between mt-8">
+                <div class=" text-l">
+                    Nombre d'interventions
+                </div>
+            </div>
+
+
+
+
+
+            <div class="mt-6 flex flex-row justify-around ">
+
+
+
+                <p class="text-sm bg-violet-200 rounded-md p-2 text-gray-900 space-x-6">
+                    <span class=" text-violet-700 font-semibold"> {{ $user->nbInterventionsEnCours() }}</span>  En cours
+
+                </p>
+
+
+                <p class="text-sm bg-green-200 rounded-md p-2 text-gray-900 space-x-6">
+                    <span class=" text-green-700 font-semibold">
+                    {{ $user->nbInterventionsTerminees() }}</span> Terminée
+
+                </p>
+
+                <p class="text-sm bg-fuchsia-200 rounded-md p-2 text-gray-900 space-x-6">
+                    <span class=" text-fuchsia-700 font-semibold">
+                    {{ $user->nbInterventionsEchouees() }}</span> Non réparable
+
+                </p>
+
+
+            </div>
+
+        </div>
+    </div>
     </div>
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-12">
