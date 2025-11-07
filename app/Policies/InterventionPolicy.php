@@ -20,7 +20,25 @@ class InterventionPolicy
 
     public function viewOwn(User $user): bool
     {
-         return in_array($user->role, ['admin', 'technicien']);
+        if ($user->role === 'admin') {
+            return true;
+        }
+        if ($user->role === 'technicien') {
+            return true;
+        }
+        return false;
+    }
+
+    public function viewIndividual(User $user, Intervention $intervention): bool
+    {
+        if ($user->role === 'admin') {
+            return true;
+        }
+        if ($user->role === 'technicien') {
+             $derniere = $intervention->derniereAttribution;
+             return $derniere && $user->id === $derniere->user_id;
+        }
+        return false;
     }
 
     /**
@@ -28,7 +46,13 @@ class InterventionPolicy
      */
     public function view(User $user, Intervention $intervention): bool
     {
-        return $user->role === 'admin' || $user->id === $intervention->technicien_id;;
+        if ($user->role === 'admin') {
+            return true;
+        }
+
+        // Fallback to checking the latest attribution (there's no technicien_id on Intervention)
+        $derniere = $intervention->derniereAttribution;
+        return $derniere && $user->id === $derniere->user_id;
     }
 
     /**
