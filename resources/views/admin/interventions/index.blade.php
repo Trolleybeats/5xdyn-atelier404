@@ -13,17 +13,19 @@
                         class="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-4 sm:mt-8 space-y-4 sm:space-y-0">
                         <div class="text-xl sm:text-2xl font-semibold text-gray-800">Liste des Interventions</div>
 
-                        <div class="w-full sm:w-auto">
-                            <a href="{{ route('admin.interventions.create') }}"
-                                class="w-full sm:w-auto inline-flex justify-center items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-200">
-                                Ajouter une intervention
-                            </a>
-                        </div>
                     </div>
 
-                    <div class="mt-6" >
-                        <!-- Barre de recherche -->
-                        <button onclick="this.nextElementSibling.classList.toggle('hidden');" class="mb-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-200">Filtre avancé</button>
+                    <div class="mt-4 w-full sm:w-auto">
+                        <div class="flex justify-between items-center mb-4">
+
+                            <a href="{{ route('admin.interventions.create') }}"
+                                class="w-auto inline-flex justify-center items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-200">
+                                Ajouter une intervention
+                            </a>
+                            <!-- Barre de recherche -->
+                            <button onclick="this.closest('.flex').parentElement.querySelector('form').classList.toggle('hidden');" class="w-auto bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-200">Filtre avancé</button>
+                            
+                        </div>
                         <form method="GET" action="{{ route('admin.interventions.index') }}" class="mb-4 grid grid-cols-1 md:grid-cols-4 gap-3 hidden">
                             <div>
                                 <label class="sr-only">Client</label>
@@ -85,6 +87,9 @@
                                 <a href="{{ route('admin.interventions.index') }}" class="px-4 py-2 border rounded">Réinitialiser</a>
                             </div>
                         </form>
+
+
+                        </div>
 
                         <!-- Version desktop (tableau) -->
                         <div class="hidden md:block overflow-x-auto">
