@@ -1,7 +1,7 @@
 @php
     use App\Models\TypeAppareil;
 @endphp
-<div class="mb-8 p-4 bg-white rounded shadow">
+<div class="mb-8 p-4 bg-[#E5E7EB] rounded shadow">
     <h2 class="text-2xl font-bold mb-4 ">Formulaire d'inscription</h2>
     <form method="POST" action="{{ route('interventions.store') }}" >
         @csrf
