@@ -26,7 +26,7 @@
                                         <th class="px-4 py-3 border text-xs font-semibold text-gray-600">Appareil</th>
                                         <th class="px-4 py-3 border text-xs font-semibold text-gray-600">Date prévue
                                         </th>
-                                        <th class="px-4 py-3 border text-xs font-semibold text-gray-600">Technicien</th>
+                                        <th class="px-4 py-3 border text-xs font-semibold text-gray-600">Client</th>
                                         <th class="px-4 py-3 border text-xs font-semibold text-gray-600 text-center">
                                             Actions</th>
                                     </tr>
@@ -68,7 +68,7 @@
                                                 {{ \Illuminate\Support\Carbon::parse($intervention->date_prevue)->format('d/m/Y') }}
                                             </td>
                                             <td class="border px-4 py-3 text-gray-600">
-                                                {{ $intervention->derniereAttribution?->user->name ?? 'Non assigné' }}
+                                                 {{ $intervention->client->nom  }}
                                             </td>
                                             <td class="border px-4 py-3">
                                                 <div class="flex justify-center space-x-3"><a
@@ -100,7 +100,7 @@
                                                 {{ \Illuminate\Support\Carbon::parse($intervention->date_prevue)->format('d/m/Y') }}
                                             </p>
                                             <p class="text-xs text-gray-600 mt-1">
-                                                {{ $intervention->derniereAttribution?->user->name ?? 'Non assigné' }}
+                                                {{ $intervention->client->nom  }}
                                             </p>
                                         </div>
                                         <div class="flex flex-col space-y-1 ml-2">

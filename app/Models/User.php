@@ -50,7 +50,42 @@ class User extends Authenticatable
     {
         return $this->hasMany(Attribution::class);
     }
-    public function notes(){
+    public function notes()
+    {
         return $this->hasMany(Note::class);
     }
+
+    public function nbInterventions()
+    {
+        return $this->hasManyThrough(Intervention::class, Attribution::class, 'user_id', 'id', 'id', 'intervention_id')->distinct('intervention_id')->count();
+    }
+
+    public function nbInterventionsAttribuees()
+    {
+        // Count interventions whose latest attribution belongs to this user
+        return Intervention::whereHas('derniereAttribution', function ($q) {
+            $q->where('user_id', $this->id);
+        })->distinct()->count();
+    }
+
+    public function nbInterventionsEnCours()
+    {
+        return $this->nbInterventionsAttribuees() - $this->nbInterventionsTerminees() - $this->nbInterventionsEchouees();
+    }
+    public function nbInterventionsTerminees()
+    {
+        return Intervention::whereHas('derniereAttribution', function ($q) {
+            $q->where('user_id', $this->id);
+        })->where('statut', 'Terminé')
+        ->distinct()->count();
+    }
+    public function nbInterventionsEchouees()
+    {
+        return Intervention::whereHas('derniereAttribution', function ($q) {
+            $q->where('user_id', $this->id);
+        })->where('statut', 'Non_réparable')
+        ->distinct()->count();
+    }
+
+
 }

@@ -8,12 +8,30 @@
                     </h2>
 
                     <div class="flex items-center justify-center space-x-8">
-                    @can('update',$intervention)
-                        <a href="{{ route('tech.interventions.edit', $intervention) }}"
-                            class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-[#60A5FA] transition mb-4 inline-block">
-                            Modifier l'intervention
-                        </a>
-                    @endcan
+                        @can('update', $intervention)
+                            <a href="{{ route('tech.interventions.edit', $intervention) }}"
+                                class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-[#60A5FA] transition mb-4 inline-block">
+                                Modifier l'intervention
+                            </a>
+                        @endcan
+                    </div>
+                    <div class="bg-gray-100 p-4 rounded-lg mb-6">
+                        <h3 class="font-semibold text-lg mb-3">Informations Client</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-sm text-gray-600">Nom</p>
+                                <p class="font-medium">{{ $intervention->client->nom }}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">Email</p>
+                                <p class="font-medium">{{ $intervention->client->email }}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">Téléphone</p>
+                                <p class="font-medium">{{ $intervention->client->telephone }}</p>
+                            </div>
+
+                        </div>
                     </div>
 
                     <div class="bg-gray-100 p-4 rounded-lg mb-6">
@@ -21,7 +39,8 @@
                         <p><strong>Statut:</strong> {{ $intervention->statut }}</p>
                         <p><strong>Priorité:</strong> {{ $intervention->priorite }}</p>
                         <p><strong>Type d'appareil:</strong> {{ $intervention->typeAppareil->nom }}</p>
-                        <p><strong>Date prévue:</strong> {{ \Illuminate\Support\Carbon::parse($intervention->date_prevue)->format('d/m/Y') }}</p>
+                        <p><strong>Date prévue:</strong>
+                            {{ \Illuminate\Support\Carbon::parse($intervention->date_prevue)->format('d/m/Y') }}</p>
                         <p><strong>Description:</strong> {{ $intervention->description }}</p>
                     </div>
 
@@ -32,38 +51,36 @@
                                 @foreach ($notes as $note)
                                     <li class="border-b pb-2">
                                         <p class="text-sm text-gray-600">
-                                            <strong>{{ $note->user->name }}</strong> - 
+                                            <strong>{{ $note->user->name }}</strong> -
                                             {{ \Illuminate\Support\Carbon::parse($note->created_at)->format('d/m/Y H:i') }}
                                         </p>
-                        <p class="mt-1">{{ $note->contenu }}</p>
+                                        <p class="mt-1">{{ $note->contenu }}</p>
 
-                        @if ($note->images->count() > 0)
-                            <div class="mt-2 grid grid-cols-2 md:grid-cols-3 gap-2">
-                                @foreach ($note->images as $image)
-                                    <figure class="aspect-square">
-                                        <img src="{{ Storage::url($image->path) }}" 
-                                             alt="Image de la note" 
-                                             class="w-full h-full object-cover rounded-lg shadow-sm"
-                                             >
-                                    </figure>
-                                @endforeach
-                            </div>
-                        @endif                                        
-                        
-                        <div class="flex justify-end">
-                                @can('delete', $note)
-                                    <button x-data="{ id: {{ $note->id }} }"
-                                        x-on:click.prevent="window.selected = id; $dispatch('open-modal', 'confirm-note-deletion');"
-                                        type="submit" class="font-bold bg-white text-gray-700 px-4 py-2 rounded shadow mt-4">
-                                        <x-heroicon-o-trash class="h-5 w-5 text-red-500" />
-                                    </button>
-                                @endcan
+                                        @if ($note->images->count() > 0)
+                                            <div class="mt-2 grid grid-cols-2 md:grid-cols-3 gap-2">
+                                                @foreach ($note->images as $image)
+                                                    <figure class="aspect-square">
+                                                        <img src="{{ Storage::url($image->path) }}"
+                                                            alt="Image de la note"
+                                                            class="w-full h-full object-cover rounded-lg shadow-sm">
+                                                    </figure>
+                                                @endforeach
+                                            </div>
+                                        @endif
+
+                                        <div class="flex justify-end">
+                                            @can('delete', $note)
+                                                <button x-data="{ id: {{ $note->id }} }"
+                                                    x-on:click.prevent="window.selected = id; $dispatch('open-modal', 'confirm-note-deletion');"
+                                                    type="submit"
+                                                    class="font-bold bg-white text-gray-700 px-4 py-2 rounded shadow mt-4">
+                                                    <x-heroicon-o-trash class="h-5 w-5 text-red-500" />
+                                                </button>
+                                            @endcan
                                         </div>
                                     </li>
-                                    
                                 @endforeach
                             </ul>
-                            
                         @else
                             <p class="text-gray-600">Aucune note associée.</p>
                         @endif
@@ -72,29 +89,29 @@
             </div>
         </div>
         <x-modal name="confirm-note-deletion" focusable>
-        <form method="post"
-            onsubmit="event.target.action= '/interventions/{{ $intervention->id }}/notes/' + window.selected"
-            class="p-6">
-            @csrf @method('DELETE')
+            <form method="post"
+                onsubmit="event.target.action= '/interventions/{{ $intervention->id }}/notes/' + window.selected"
+                class="p-6">
+                @csrf @method('DELETE')
 
-            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                Êtes-vous sûr de vouloir supprimer cette note ?
-            </h2>
+                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                    Êtes-vous sûr de vouloir supprimer cette note ?
+                </h2>
 
-            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                Cette action est irréversible. Toutes les données seront supprimées.
-            </p>
+                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                    Cette action est irréversible. Toutes les données seront supprimées.
+                </p>
 
-            <div class="mt-6 flex justify-end">
-                <x-secondary-button x-on:click="$dispatch('close')">
-                    Annuler
-                </x-secondary-button>
+                <div class="mt-6 flex justify-end">
+                    <x-secondary-button x-on:click="$dispatch('close')">
+                        Annuler
+                    </x-secondary-button>
 
-                <x-danger-button class="ml-3" type="submit">
-                    Supprimer
-                </x-danger-button>
-            </div>
-        </form>
-    </x-modal>
+                    <x-danger-button class="ml-3" type="submit">
+                        Supprimer
+                    </x-danger-button>
+                </div>
+            </form>
+        </x-modal>
     </div>
 </x-app-layout>
