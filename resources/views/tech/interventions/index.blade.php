@@ -44,7 +44,7 @@
                             {{ $intervention->statut === 'Non_réparable' ? 'bg-fuchsia-100 text-fuchsia-800' : '' }}">
                                                     {{ $intervention->statut === 'Nouvelle_demande' ? 'Nouvelle demande' : '' }}
                                                     {{ $intervention->statut === 'Diagnostic' ? 'Diagnostic' : '' }}
-                                                    {{ $intervention->statut === 'En_réparations' ? 'En réparations' : '' }}
+                                                    {{ $intervention->statut === 'En_réparations' ? 'En réparation' : '' }}
                                                     {{ $intervention->statut === 'Terminé' ? 'terminé' : '' }}
                                                     {{ $intervention->statut === 'Non_réparable' ? 'non réparable' : '' }}
                                                 </span>
@@ -113,9 +113,9 @@
                                             {{ $intervention->statut === 'Non_réparable' ? 'bg-fuchsia-100 text-fuchsia-800' : '' }}">
                                                 {{ $intervention->statut === 'Nouvelle_demande' ? 'Nouvelle demande' : '' }}
                                                 {{ $intervention->statut === 'Diagnostic' ? 'Diagnostic' : '' }}
-                                                {{ $intervention->statut === 'En_réparations' ? 'En réparations' : '' }}
-                                                {{ $intervention->statut === 'Terminé' ? 'terminé' : '' }}
-                                                {{ $intervention->statut === 'Non_réparable' ? 'non réparable' : '' }}
+                                                {{ $intervention->statut === 'En_réparations' ? 'En réparation' : '' }}
+                                                {{ $intervention->statut === 'Terminé' ? 'Terminé' : '' }}
+                                                {{ $intervention->statut === 'Non_réparable' ? 'Non réparable' : '' }}
                                             </span>
                                             <span
                                                 class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
@@ -133,16 +133,16 @@
 
 
                                         <div class="flex space-x-2 pt-3 border-t border-gray-100">
-                                            <a href="{{ route('tech.interventions.edit', $intervention) }}"
-                                                class="flex-1 bg-blue-50 hover:bg-blue-100 text-blue-600 text-center py-2 px-3 rounded-md text-sm font-medium transition">
-                                                Modifier
-                                            </a>
                                             <a
                         href="{{ route('tech.interventions.show', $intervention) }}"
                         class="text-green-600 flex-1 bg-green-50 hover:bg-green-100 text-center py-2 px-3 rounded-md text-sm font-medium transition"
                       >
                         Détails
                       </a>
+                      <a href="{{ route('tech.interventions.edit', $intervention) }}"
+                                                class="flex-1 bg-blue-50 hover:bg-blue-100 text-blue-600 text-center py-2 px-3 rounded-md text-sm font-medium transition">
+                                                Modifier
+                                            </a>
                                         </div>
                                     </div>
                             @endforeach
