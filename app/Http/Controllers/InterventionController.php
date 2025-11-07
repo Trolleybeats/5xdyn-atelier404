@@ -79,9 +79,9 @@ class InterventionController extends Controller
      */
     public function show($id)
     {
-        
+
         $intervention = Intervention::findOrFail($id);
-        Gate::authorize('viewOwn', $intervention);
+        Gate::authorize('viewIndividual', $intervention);
 
         $notes = $intervention
             ->notes()
