@@ -43,8 +43,8 @@
                                     <figure class="aspect-square">
                                         <img src="{{ Storage::url($image->path) }}" 
                                              alt="Image de la note" 
-                                             class="w-full h-full object-cover rounded-lg shadow-sm cursor-pointer"
-                                             onclick="openImageModal('{{ Storage::url($image->path) }}')">
+                                             class="w-full h-full object-cover rounded-lg shadow-sm"
+                                             >
                                     </figure>
                                 @endforeach
                             </div>
@@ -54,7 +54,7 @@
                                 @can('delete', $note)
                                     <button x-data="{ id: {{ $note->id }} }"
                                         x-on:click.prevent="window.selected = id; $dispatch('open-modal', 'confirm-note-deletion');"
-                                        type="submit" class="font-bold bg-white text-gray-700 px-4 py-2 rounded shadow">
+                                        type="submit" class="font-bold bg-white text-gray-700 px-4 py-2 rounded shadow mt-4">
                                         <x-heroicon-o-trash class="h-5 w-5 text-red-500" />
                                     </button>
                                 @endcan
