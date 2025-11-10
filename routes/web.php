@@ -20,12 +20,16 @@ Route::get('/interventions', [InterventionController::class, 'index'])->name('in
 Route::post('/interventions', [InterventionController::class, 'store'])->name('interventions.store');
 
 
+Route::get('/interventions/{user}',[InterventionController::class, 'index'])->middleware(['auth', 'verified'])->name('interventions.forUser');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+Route::get('/interventions/{user?}',[InterventionController::class, 'index'])->middleware(['auth', 'verified'])->name('interventions.index');
 
 //Routes pour la gestion des utilisateurs
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
@@ -58,6 +62,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 
 //Routes pour la gestion des interventions (Vue technicien)
 Route::middleware(['auth', 'verified'])->prefix('tech')->name('tech.')->group(function () {
+
     Route::resource('/interventions', InterventionController::class)->only(['index', 'show', 'edit', 'update']);
 });
 

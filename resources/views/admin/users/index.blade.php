@@ -52,9 +52,9 @@
                                             </td>
                                             <td class="border px-4 py-3">
                                                 <div
-                                                    class="text-sm bg-violet-200 rounded-md p-2 text-gray-900 space-x-4 text-center">
+                                                    class="text-sm bg-violet-200 rounded-md p-2 text-gray-900 space-x-4 text-center"><a href="{{ route('interventions.forUser', $user) }}">
                                                     <span class=" text-violet-700 font-semibold">
-                                                        {{ $user->nbInterventionsEnCours() }}</span> En cours
+                                                        {{ $user->nbInterventionsEnCours() }}</span> En cours</a>
                                                 </div>
                                             </td>
                                             <td class="border px-4 py-3">
@@ -91,9 +91,9 @@
                                             {{ $user->role }}
                                         </span>
                                         <div
-                                            class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-violet-200 p-2 text-gray-900 ">
+                                            class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-violet-200 p-2 text-gray-900 "><a href="{{ route('interventions.forUser', $user) }}">
                                             <span class=" text-violet-700 font-semibold">
-                                                {{ $user->nbInterventionsEnCours() }}&nbsp; </span> en cours
+                                                {{ $user->nbInterventionsEnCours() }}&nbsp; </span> en cours</a>
                                         </div>
                                     </div>
 

@@ -25,7 +25,7 @@
                         <x-nav-link :href="route('admin.interventions.index')" :active="request()->routeIs('admin.interventions.*')"> {{ __('Interventions') }}
                         </x-nav-link>
                     @endcan
-                    @can('viewOwn', App\Models\Intervention::class)
+                    @can('viewOwn', [App\Models\Intervention::class, auth()->user()])
                         <x-nav-link :href="route('tech.interventions.index')" :active="request()->routeIs('tech.interventions.*')"> {{ __('Mes Interventions') }}
                         </x-nav-link>
                     @endcan
