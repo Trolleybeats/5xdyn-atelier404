@@ -15,19 +15,59 @@ class InterventionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         Gate::authorize('viewAny', Intervention::class);
-        $interventions = Intervention::with(['typeAppareil', 'client', 'derniereAttribution.user'])
-            ->latest()
-            ->paginate(10);
+
+        $query = Intervention::with(['typeAppareil', 'client', 'derniereAttribution.user'])->latest();
+
+        // Filtre par nom du client (recherche textuelle)
+        if ($request->filled('client')) {
+            $clientNom = $request->input('client');
+            $query->whereHas('client', function ($q) use ($clientNom) {
+                $q->where('nom', 'like', "%{$clientNom}%");
+            });
+        }
+
+        // Filtre par statut exact
+        if ($request->filled('statut')) {
+            $query->where('statut', $request->input('statut'));
+        }
+
+        // Filtre par technicien (attributions)
+        if ($request->filled('technicien')) {
+            $technicienId = $request->input('technicien');
+            $query->whereHas('attributions', function ($q) use ($technicienId) {
+                $q->where('user_id', $technicienId);
+            });
+        }
+
+        // Filtre par type d'appareil
+        if ($request->filled('type_appareil')) {
+            $query->where('type_appareil_id', $request->input('type_appareil'));
+        }
+
+        //Filtre par priorité
+        if ($request->filled('priorite')) {
+            $query->where('priorite', $request->input('priorite'));
+        }
+
+        //Filtre par date prévue
+        if ($request->filled('date_prevue')) {
+            $query->whereDate('date_prevue', $request->input('date_prevue'));
+        }
+
+        $interventions = $query->paginate(10);
 
         // Charger tous les techniciens pour la liste déroulante
         $techniciens = User::whereIn('role', ['admin', 'technicien'])->get();
-
+        // Charger les types d'appareil pour la sélection
+        $types = \App\Models\TypeAppareil::all();
+        
         return view('admin.interventions.index', [
             'interventions' => $interventions,
             'techniciens' => $techniciens,
+            'types' => $types,
         ]);
     }
 
