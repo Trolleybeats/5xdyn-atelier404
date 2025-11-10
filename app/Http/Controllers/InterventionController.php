@@ -167,4 +167,15 @@ class InterventionController extends Controller
 
         return redirect()->route('tech.interventions.show', $intervention)->with('success', 'Note supprimée avec succès.');
     }
+
+    public function deleteImage(Intervention $intervention, Note $note, $imageId)
+    {
+        $image = $note->images()->findOrFail($imageId);
+
+        Gate::authorize('delete', $image);
+
+        $image->delete();
+
+        return redirect()->route('tech.interventions.show', $intervention)->with('success', 'Image supprimée avec succès.');
+    }
 }
