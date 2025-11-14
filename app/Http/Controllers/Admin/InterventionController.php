@@ -37,9 +37,15 @@ class InterventionController extends Controller
         // Filtre par technicien (attributions)
         if ($request->filled('technicien')) {
             $technicienId = $request->input('technicien');
-            $query->whereHas('attributions', function ($q) use ($technicienId) {
-                $q->where('user_id', $technicienId);
-            });
+            if ($technicienId === 'null') {
+                // Interventions non assignées
+                $query->whereDoesntHave('attributions');
+            } else {
+                // Interventions assignées à un technicien spécifique
+                $query->whereHas('attributions', function ($q) use ($technicienId) {
+                    $q->where('user_id', $technicienId);
+                });
+            }
         }
 
         // Filtre par type d'appareil
