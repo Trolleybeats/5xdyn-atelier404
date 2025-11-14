@@ -99,11 +99,11 @@
                                             <td class="border px-4 py-3">
                                                 <div class="flex justify-center space-x-3"><a
                                                         href="{{ route('tech.interventions.show', $intervention) }}"
-                                                        class="text-green-600">
+                                                        class=" font-medium text-sm transition">
                                                         Détails
                                                     </a>
                                                     <a href="{{ route('tech.interventions.edit', $intervention) }}"
-                                                        class="text-blue-500 hover:text-blue-700 font-medium text-sm transition">
+                                                        class=" font-medium text-sm transition">
                                                         Modifier
                                                     </a>
                                                 </div>

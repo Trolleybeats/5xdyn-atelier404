@@ -72,16 +72,16 @@
                                             <td class="border px-4 py-3">
                                                 <div class="flex justify-center space-x-3">
                                                     <a href="{{ route('admin.clients.show', $client) }}"
-                                                        class="text-green-500 hover:text-green-700 font-medium text-sm transition">
+                                                        class=" font-medium text-sm transition">
                                                         Détails
                                                     </a>
                                                     <a href="{{ route('admin.clients.edit', $client) }}"
-                                                        class="text-blue-500 hover:text-blue-700 font-medium text-sm transition">
+                                                        class=" font-medium text-sm transition">
                                                         Modifier
                                                     </a>
                                                     <button x-data="{ id: {{ $client->id }} }"
                                                         x-on:click.prevent="window.selected = id; $dispatch('open-modal', 'confirm-client-deletion');"
-                                                        class="text-red-500 hover:text-red-700 font-medium text-sm transition">
+                                                        class=" font-medium text-sm transition">
                                                         Supprimer
                                                     </button>
                                                 </div>
