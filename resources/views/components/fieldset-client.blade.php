@@ -14,16 +14,16 @@
     </div>
     {{-- Telephone --}}
     <div>
-        <x-input-label for="telephone" :value="__('telephone')" />
+        <x-input-label for="telephone" :value="__('Téléphone')" />
         <x-text-input id="telephone" class="block mt-1 w-full" type="tel" name="telephone" :value="old('telephone')"
             required />
         <x-input-error :messages="$errors->get('tel')" class="mt-2" />
     </div>
     {{-- adresse --}}
     <div>
-        <x-input-label for="adresse" :value="__('adresse')" />
-        <x-text-input id="telephone" class="block mt-1 w-full" type="tel" name="telephone" :value="old('telephone')"
+        <x-input-label for="adresse" :value="__('Adresse postale')" />
+        <x-text-input id="adresse" class="block mt-1 w-full" type="text" name="adresse" :value="old('adresse')"
             required />
-        <x-input-error :messages="$errors->get('tel')" class="mt-2" />
+        <x-input-error :messages="$errors->get('adresse')" class="mt-2" />
     </div>
 </fieldset>
