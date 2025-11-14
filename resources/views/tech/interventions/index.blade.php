@@ -12,7 +12,7 @@
                     <!-- Header responsive -->
                     <div
                         class="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-4 sm:mt-8 space-y-4 sm:space-y-0">
-                        <div class="text-xl sm:text-2xl font-semibold text-gray-800">Mes Interventions</div>
+                        <div class="text-xl sm:text-2xl font-semibold text-gray-800"> Interventions de {{$user->name}}</div>
                     </div>
 
                     <div class="mt-6">

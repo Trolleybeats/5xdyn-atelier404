@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Models\Intervention;
 use App\Models\Note;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -15,17 +16,27 @@ class InterventionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(?User $user = null)
     {
-        //
-        Gate::authorize('viewOwn', Intervention::class);
-        $interventions = Intervention::whereHas('derniereAttribution', function ($query) {
-            $query->where('user_id', auth()->id());
+        // Déterminer l'utilisateur cible : paramètre optionnel (admin peut passer un user),
+        // sinon c'est l'utilisateur authentifié (cas "Mes interventions").
+        $auth = Auth::user();
+        if (!$user) {
+            $user = $auth;
+        }
+
+    // Authorize viewing this user's interventions. The policy expects a User as second arg.
+    Gate::authorize('viewOwn', [Intervention::class, $user]);
+        // Récupérer les interventions dont la dernière attribution est pour cet utilisateur
+        $interventions = Intervention::whereHas('derniereAttribution', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
         })
             ->with(['typeAppareil', 'client', 'derniereAttribution.user'])
             ->paginate(15);
+
         return view('tech.interventions.index', [
             'interventions' => $interventions,
+            'user' => $user,
         ]);
     }
 
@@ -133,7 +144,8 @@ class InterventionController extends Controller
 
     public function addNote(Request $request, Intervention $intervention)
     {
-        Gate::authorize('viewOwn', $intervention);
+    // Use the instance-level ability for an Intervention
+    Gate::authorize('viewIndividual', $intervention);
 
         $request->validate([
             'contenu' => 'required|string',
