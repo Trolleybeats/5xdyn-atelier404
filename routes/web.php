@@ -60,20 +60,13 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 });
 
 
-//Routes pour la gestion des interventions (Vue technicien)
-Route::middleware(['auth', 'verified'])->prefix('tech')->name('tech.')->group(function () {
-
-    Route::resource('/interventions', InterventionController::class)->only(['index', 'show', 'edit', 'update']);
-});
-
-
-//Routes pour les notes
+//Routes pour les notes et les images
 Route::middleware(['auth'])->group(function () {
     Route::post('/interventions/{intervention}/notes', [InterventionController::class, 'addNote'])->name('interventions.notes.add');
     Route::delete('/interventions/{intervention}/notes/{note}', [InterventionController::class, 'deleteNote'])->name('interventions.notes.delete');
+    
+    // Images des notes
+    Route::delete('/interventions/{intervention}/notes/{note}/images/{image}', [InterventionController::class, 'deleteImage'])->name('interventions.notes.images.delete');
 });
-
-//Routes pour les images
-/*Route::post('/interventions/{intervention}/images', [ImageController::class, 'addImage'])->name('interventions.images.add');*/
 
 require __DIR__ . '/auth.php';

@@ -67,17 +67,6 @@
                                                 @endforeach
                                             </div>
                                         @endif
-
-                                        <div class="flex justify-end">
-                                            @can('delete', $note)
-                                                <button x-data="{ id: {{ $note->id }} }"
-                                                    x-on:click.prevent="window.selected = id; $dispatch('open-modal', 'confirm-note-deletion');"
-                                                    type="submit"
-                                                    class="font-bold bg-white text-gray-700 px-4 py-2 rounded shadow mt-4">
-                                                    <x-heroicon-o-trash class="h-5 w-5 text-red-500" />
-                                                </button>
-                                            @endcan
-                                        </div>
                                     </li>
                                 @endforeach
                             </ul>
@@ -88,30 +77,6 @@
                 </div>
             </div>
         </div>
-        <x-modal name="confirm-note-deletion" focusable>
-            <form method="post"
-                onsubmit="event.target.action= '/interventions/{{ $intervention->id }}/notes/' + window.selected"
-                class="p-6">
-                @csrf @method('DELETE')
 
-                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                    Êtes-vous sûr de vouloir supprimer cette note ?
-                </h2>
-
-                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    Cette action est irréversible. Toutes les données seront supprimées.
-                </p>
-
-                <div class="mt-6 flex justify-end">
-                    <x-secondary-button x-on:click="$dispatch('close')">
-                        Annuler
-                    </x-secondary-button>
-
-                    <x-danger-button class="ml-3" type="submit">
-                        Supprimer
-                    </x-danger-button>
-                </div>
-            </form>
-        </x-modal>
     </div>
 </x-app-layout>
