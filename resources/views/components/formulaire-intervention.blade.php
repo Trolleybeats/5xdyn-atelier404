@@ -12,13 +12,13 @@
             {{-- type Appareil --}}
             <div>
 
-                <x-input-label for="typeAppareil" :value="__('typeAppareil')" />
+                <x-input-label for="typeAppareil" :value="__('Type de l\'appareil')" />
                 <x-selection-type-appareil id="typeAppareil" name="typeAppareil" :collection="TypeAppareil::getAll()"
                     class="block mt-1 w-full"></x-selection-type-appareil>
                 <x-input-error :messages="$errors->get('typeAppareil')" class="mt-2" />
             </div>
             <div>
-                <x-input-label for="description" :value="__('description')" />
+                <x-input-label for="description" :value="__('Description du problème')" />
                 <textarea name="description" id="description" class="w-full" ></textarea>
             </div>
         </fieldset>

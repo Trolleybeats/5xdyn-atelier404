@@ -18,7 +18,9 @@
 /public/storage
 /storage/*.key
 /storage/pail
+/tests/Browser/screenshots
 /vendor
 Homestead.json
 Homestead.yaml
 Thumbs.db
+.env.dusk.local
