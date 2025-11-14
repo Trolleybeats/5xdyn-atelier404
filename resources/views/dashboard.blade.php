@@ -12,7 +12,7 @@
                     {{ __("Vous êtes connecté!") }}
                 </div>
             <div class="flex flex-row justify-between bg-white overflow-hidden shadow-sm sm:rounded-lg">
-    
+
                 @can('viewAny', App\Models\User::class)
                 <div class="p-6 text-gray-900">
                     <a href="{{ route('admin.users.index') }}" class="text-blue-500 underline">Gérer les utilisateurs</a>
@@ -25,7 +25,7 @@
                 </div>
                 @endcan
 
-                @can('viewOwn', App\Models\Intervention::class)
+                 @can('viewOwn', [App\Models\Intervention::class, auth()->user()])
                 <div class="p-6 text-gray-900">
                     <a href="{{ route('tech.interventions.index') }}" class="text-blue-500 underline">Mes interventions</a>
                 </div>

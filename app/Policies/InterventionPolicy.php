@@ -2,9 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Intervention;
 use App\Models\User;
+use App\Models\Intervention;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Auth;
 
 class InterventionPolicy
 {
@@ -18,12 +19,15 @@ class InterventionPolicy
         return $user->role === 'admin';
     }
 
-    public function viewOwn(User $user): bool
+    public function viewOwn(User $user, User $targetUser): bool
     {
+
+
         if ($user->role === 'admin') {
             return true;
         }
-        if ($user->role === 'technicien') {
+        if ($user->role === 'technicien' && $user->id === $targetUser->id) {
+
             return true;
         }
         return false;
@@ -31,6 +35,7 @@ class InterventionPolicy
 
     public function viewIndividual(User $user, Intervention $intervention): bool
     {
+
         if ($user->role === 'admin') {
             return true;
         }
