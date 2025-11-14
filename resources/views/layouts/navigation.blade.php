@@ -1,17 +1,26 @@
 <nav x-data="{ open: false }" class="bg-white border-gray-200">
 
     <!-- Sidebar Desktop -->
-    <div class="hidden sm:flex w-64 h-screen bg-white border-r border-gray-200 flex-col p-4 fixed">
+    <div class="hidden md:flex w-64 h-screen bg-white border-r border-gray-200 flex-col p-4 fixed">
 
         <!-- Logo -->
         <div class="shrink-0 flex items-center mb-6">
-            <a href="{{ route('dashboard') }}">
+            <a href="{{ route('welcome') }}">
                 <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
             </a>
         </div>
 
         <!-- Navigation Links -->
         <div class="flex flex-col space-y-1">
+
+            <x-nav-link 
+                :href="route('dashboard')" 
+                :active="request()->routeIs('dashboard')"
+                class="flex items-center px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100"
+            >
+                <i class="ri-dashboard-line mr-3 text-lg"></i>
+                {{ __('Tableau de bord') }}
+            </x-nav-link>
 
             @can('viewOwn', [App\Models\Intervention::class, auth()->user()])
                 <x-nav-link 
@@ -96,7 +105,7 @@
     </div>
 
     <!-- Top Bar (mobile) -->
-    <div class="sm:hidden border-b border-gray-100 px-4 py-3 flex justify-between items-center">
+    <div class="md:hidden border-b border-gray-100 px-4 py-3 flex justify-between items-center">
         <!-- Logo -->
         <a href="{{ route('dashboard') }}">
             <x-application-logo class="block h-8 w-auto fill-current text-gray-800" />
@@ -118,7 +127,7 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden bg-white border-b border-gray-200">
+    <div :class="{ 'block': open, 'hidden': !open }" class="hidden md:hidden bg-white border-b border-gray-200">
 
         <div class="pt-2 pb-3 space-y-1">
             @can('viewOwn', [App\Models\Intervention::class,Auth::user()])
