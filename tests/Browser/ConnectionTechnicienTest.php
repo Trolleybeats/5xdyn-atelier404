@@ -6,9 +6,10 @@ use Laravel\Dusk\Browser;
 
 test('allows authenticated user to see the dashboard', function () {
     $this->browse(function (Browser $browser) {
-        $user = User::find(2); // Assurez-vous que cet utilisateur existe dans votre base de données de test
-        $browser->loginAs($user)
-                ->visit('/dashboard')
-                ->assertSee('Technicien');
+        // Create a technician user for the test
+        $user = User::factory()->create(['role' => 'technicien']);
+    $browser->loginAs($user)
+        ->visit('/dashboard')
+        ->assertSee('Mes Interventions');
     });
 });

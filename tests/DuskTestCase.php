@@ -45,4 +45,21 @@ abstract class DuskTestCase extends BaseTestCase
             )
         );
     }
+
+    /**
+     * Seed the database for browser tests so the browser process can find
+     * users and other seeded data after migrations run.
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Run the default DatabaseSeeder for each test so fixtures exist.
+        // DatabaseMigrations (used by Pest for Browser tests) will run
+        // migrations before the test; seeding here ensures the seeded
+        // records are present for the separate browser process.
+        if (method_exists($this, 'seed')) {
+            $this->seed();
+        }
+    }
 }

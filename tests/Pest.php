@@ -3,8 +3,8 @@
 
 
 pest()->extend(Tests\DuskTestCase::class)
- //   ->use(Illuminate\Foundation\Testing\DatabaseTruncation::class)
-    // ->use(Illuminate\Foundation\Testing\DatabaseMigrations::class)
+    // Ensure browser tests run migrations so the browser process sees the test data.
+    ->use(Illuminate\Foundation\Testing\DatabaseMigrations::class)
     ->in('Browser');
 /*
 |--------------------------------------------------------------------------
