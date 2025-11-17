@@ -103,7 +103,7 @@
                                     <option value="">Toutes priorités</option>
                                     <option value="faible" {{ request('priorite')=='faible' ? 'selected' : '' }}>Faible</option>
                                     <option value="moyenne" {{ request('priorite')=='moyenne' ? 'selected' : '' }}>Moyenne</option>
-                                    <option value="eleve" {{ request('priorite')=='eleve' ? 'selected' : '' }}>Élevée</option>
+                                    <option value="elevee" {{ request('priorite')=='elevee' ? 'selected' : '' }}>Élevée</option>
                                     <option value="critique" {{ request('priorite')=='critique' ? 'selected' : '' }}>Critique</option>
                                 </select>
                             </div>
@@ -161,11 +161,11 @@
                                                     class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
                         {{ $intervention->priorite === 'faible' ? 'bg-lime-100 text-lime-800  ' : '' }}
                          {{ $intervention->priorite === 'moyenne' ? 'bg-yellow-100 text-yellow-800 ' : '' }}
-                         {{ $intervention->priorite === 'eleve' ? 'bg-orange-100 text-orange-800 ' : '' }}
+                         {{ $intervention->priorite === 'elevee' ? 'bg-orange-100 text-orange-800 ' : '' }}
                         {{ $intervention->priorite === 'critique' ? 'bg-red-100 text-red-800  ' : '' }}">
                                                     {{ $intervention->priorite === 'faible' ? 'faible' : '' }}
                                                     {{ $intervention->priorite === 'moyenne' ? 'moyenne' : '' }}
-                                                    {{ $intervention->priorite === 'eleve' ? 'élevée' : '' }}
+                                                    {{ $intervention->priorite === 'elevee' ? 'élevée' : '' }}
                                                     {{ $intervention->priorite === 'critique' ? 'critique' : '' }}
                                                 </span>
                                             </td>
@@ -236,11 +236,11 @@
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
                                                 {{ $intervention->priorite === 'faible' ? 'bg-lime-100 text-lime-800' : '' }}
                                                 {{ $intervention->priorite === 'moyenne' ? 'bg-yellow-100 text-yellow-800' : '' }}
-                                                {{ $intervention->priorite === 'eleve' ? 'bg-orange-100 text-orange-800' : '' }}
+                                                {{ $intervention->priorite === 'elevee' ? 'bg-orange-100 text-orange-800' : '' }}
                                                 {{ $intervention->priorite === 'critique' ? 'bg-red-100 text-red-800' : '' }}">
                                                 {{ $intervention->priorite === 'faible' ? 'faible' : '' }}
                                                 {{ $intervention->priorite === 'moyenne' ? 'moyenne' : '' }}
-                                                {{ $intervention->priorite === 'eleve' ? 'élevée' : '' }}
+                                                {{ $intervention->priorite === 'elevee' ? 'élevée' : '' }}
                                                 {{ $intervention->priorite === 'critique' ? 'critique' : '' }}
                                             </span>
                                         </div>
