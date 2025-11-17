@@ -21,7 +21,7 @@ class InterventionFactory extends Factory
             'description' => fake()->paragraph(),
             'statut' => fake()->randomElement(['Nouvelle_demande','Diagnostic','En_réparations','Terminé','Non_réparable']),
             'date_prevue' => fake()->dateTimeBetween('now', '+1 month'),
-            'priorite' => fake()->randomElement(['faible','moyenne','eleve','critique']),
+            'priorite' => fake()->randomElement(['faible','moyenne','elevee','critique']),
             'type_appareil_id' => \App\Models\TypeAppareil::get()->random()->id,
             'client_id' => \App\Models\Client::get()->random()->id,
         ];
